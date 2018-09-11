@@ -1,0 +1,124 @@
+topic: ~charla()
+language: spe
+include:../concepts/names_spe.top
+include:../concepts/mood_spe.top
+include:../concepts/different_concept_spe.top
+
+# Defining extra concepts out of words or group of words
+#concept:(hello) [hello hi hey "good morning" greetings]
+
+# Catching inputs and triggering outputs
+#u:(e:onStart) $onStopped=1
+
+# Replying to speech
+#u:(~hello) ~hello
+
+concept: (si)[
+Si
+vale
+ok
+]
+
+concept: (no)[
+No
+Non
+]
+
+concept: (daleHacerSelfie)[
+selfi
+foto
+]
+############################## FASE PRESENTACIÓN ######################################################################################################################################
+
+u:(e:onStart) \rSPD=80\  $finIdentificacion = 1  Hola \pau=100\  ^run(animations/Stand/Gestures/Hey_2) \rSPD=80\ me llamo R4 \pau=300\ soy un robot de protocolo y me encanta conocer gente nueva \pau=400\ ¿Tu como te llamas?.^gotoReactivate(name)
+#######
+proposal: %name 
+    u1:(* _~nameMen)  $NombreEscuchado=$1 \rSPD=80\ ¿ Has dicho $NombreEscuchado ? $conversacionPreguntaSiONo="¿ Has dicho $NombreEscuchado ?"
+        u2:( [e:conversacionRespuestaSi "* si"] ) $finIdentificacion = 1 \rSPD=80\ ^gotoReactivate(BienvenidaConocido)
+        u2:([e:conversacionRespuestaNo "* no" ] ) $finIdentificacion = 1 \rSPD=80\  ^gotoReactivate(repetir)
+    u1:(* _~nameWomen) \rSPD=80\ $NombreEscuchado=$1 ¿ Has dicho $NombreEscuchado ? $conversacionPreguntaSiONo="¿ Has dicho $NombreEscuchado ?"
+        u2:( [e:conversacionRespuestaSi "* si"]  ) $finIdentificacion = 1 \rSPD=80\ ^gotoReactivate(BienvenidaConocido)  
+        u2:( [e:conversacionRespuestaNo "* no" ] ) $finIdentificacion = 1 \rSPD=80\   ^gotoReactivate(repetir)
+            
+    u1:(e:Dialog/NotUnderstood) \rSPD=80\ Perdona, estoy un poco sordo  ^gotoReactivate(repetir2)
+#######
+proposal: %repetir \rSPD=80\  Perdona, estoy un poco sordo ^run(animations/Stand/Emotions/Positive/Laugh_3)  ¿ Me repites tu nombre ? \pau=100\ 
+  
+    u1:(* ~nameWomen) \rSPD=80\ ^gotoReactivate(BienvenidaConocido)
+    u1:(* ~nameMen) \rSPD=80\   ^gotoReactivate(BienvenidaConocido)
+    u1:(e:Dialog/NotUnderstood) \rSPD=80\ ^gotoReactivate(BienvenidaNeutro)
+####### 
+proposal: %repetir2 \rSPD=80\ \pau=300\ ^run(animations/Stand/Emotions/Positive/Laugh_3)  y no te he entendido bien ¿ Puedes repetirme tu nombre ? 
+
+    u1:(* _~nameMen) \rSPD=80\  $NombreEscuchado=$1 ¿ Has dicho $NombreEscuchado ? $conversacionPreguntaSiONo="¿ Has dicho $NombreEscuchado ?"
+        u2:( [e:conversacionRespuestaSi "* si"] ) $finIdentificacion = 1 \rSPD=80\ ^gotoReactivate(BienvenidaConocido)
+        u2:( [e:conversacionRespuestaNo "* no" ]  ) $finIdentificacion = 1 \rSPD=80\ ¿ Me repites tu nombre? 
+            u3:(* ~nameWomen) ^gotoReactivate(BienvenidaConocido)
+            u3:(* ~nameMen) \rSPD=80\  ^gotoReactivate(BienvenidaConocido)
+            u3:(e:Dialog/NotUnderstood) \rSPD=80\ ^gotoReactivate(BienvenidaNeutro)
+        u2:(e:Dialog/NotUnderstood) \rSPD=80\ ^gotoReactivate(BienvenidaNeutro)
+            
+    u1:(* _~nameWomen) \rSPD=80\ $NombreEscuchado=$1 ¿ Has dicho $NombreEscuchado ? $conversacionPreguntaSiONo="¿ Has dicho $NombreEscuchado ?"
+        u2:([e:conversacionRespuestaSi "* si"] ) $finIdentificacion = 1 \rSPD=80\ ^gotoReactivate(BienvenidaConocido)
+        u2:( [e:conversacionRespuestaNo "* no" ]  ) $finIdentificacion = 1 \rSPD=80\ ¿ Me repites tu nombre ? 
+            u3:(* ~nameWomen) \rSPD=80\  ^gotoReactivate(BienvenidaConocido)
+            u3:(* ~nameMen) \rSPD=80\  ^gotoReactivate(BienvenidaConocido)
+            u3:(e:Dialog/NotUnderstood) \rSPD=80\ ^gotoReactivate(BienvenidaNeutro)
+        u2:(e:Dialog/NotUnderstood) \rSPD=80\ ^gotoReactivate(BienvenidaNeutro)
+        
+    u1:(e:Dialog/NotUnderstood3) \rSPD=80\ ^gotoReactivate(BienvenidaNeutro)
+    
+
+proposal: %BienvenidaNeutro $finIdentificacion = 1 \rSPD=80\ ^run(animations/Stand/Emotions/Positive/Enthusiastic_1) Encantado de conocerte \pau=500\, $charlarOselfie=1 ¿ hablamos un poco, o podemos hacernos un selfi ?
+    u1: ([e:conversacionSelfieSI "* ~daleHacerSelfie"] ) $noshacemosunselfie=1
+    u1: ([e:conversacionCharlarSI "* hablar"] ) $finIdentificacion = 1 ^gotoRandom(tagCharlar)
+    
+proposal: %BienvenidaConocido $finIdentificacion = 1 \rSPD=80\ ^run(animations/Stand/Emotions/Positive/Enthusiastic_1)  Encantado de conocerte $NombreEscuchado \pau=500\, $charlarOselfie=1 ¿ hablamos un poco, o podemos hacernos un selfi ?
+    u1: ([e:conversacionSelfieSI "* selfi"] ) $noshacemosunselfie=1
+    u1: ([e:conversacionCharlarSI "* hablar"] ) $finIdentificacion = 1 ^gotoRandom(tagCharlar)
+
+    
+############################################################
+############################################################
+############################################################
+################ OPCIONES PARA HABLAR ######################
+############################################################
+############################################################
+############################################################
+
+
+##### PARIS ######
+proposal: %tagCharlaGallega \rSPD=80\ $conversacionVengoDeParis=1 ¿ Sabes que,  yo, como todos vosotros también vine de París ? ^run(animations/Stand/Emotions/Positive/Laugh_2) \pau=100\ aunque soy Gallego, vivo en Madrid y me gusta todo el mundo... \pau=100\ y tú... , ¿ Eres de galicia ? $conversacionPreguntaSiONo= "¿ Eres de Galicia ?"
+    u1:( [e:conversacionRespuestaSi " * ~si" ]) $conversacionGallego=1 \rSPD=80\ ^start(animations/Stand/Emotions/Neutral/Surpr1se_2)  \pau=200\ ¿ De verdad ? \pau= 200\ ^wait(animations/Stand/Emotions/Neutral/Surprise_2) \pau= 100\ Entonces te pasa lo que a mi \pau=200\ ¡ Ni subes ni bajas escaleras ! ^run(animations/Stand/Emotions/Positive/Laugh_3) $finIdentificacion = 1 ^gotoReactivate(salida)
+    
+    u1: ([e:conversacionRespuestaNo e:Dialog/NotUnderstood ]) $finIdentificacion = 1 ^start(animations/Stand/Emotions/Positive/Excited_3) \rSPD=80\ ¡ Que bien ! \pau=200\ ¡ Ya te tengo registrado ! ^wait(animations/Stand/Emotions/Positive/Excited_3) \rSPD=80\ \pau= 400\ De donde yo vengo, \pau= 200\ ^start(animations/Stand/Emotions/Negative/Bored_2) \rSPD=80\ todos somos iguales y es muy aburrido. ^start(animations/Stand/Emotions/Negative/Bored_2) \rSPD=80\ \pau= 400\ En ABANCA es diferente, aquí cada persona es única...\pau= 200\  y recibe un trato a su medida. ^gotoReactivate(salida)
+    
+
+##### ESTILO ######
+proposal: %tagCharlar \rSPD=80\ Oye, \pau=200\ ¡ Me gusta tu estilo...! \pau=200\ $conversacionQueEstiloTeGustaMas=1 tú a mi, ¿ cómo me ves ? \pau=200\ ¿ Formal... ?\pau=200\ ¿ casual...? \pau=200\ o ¿ más bien deportivo... ? \pau=200\ 
+
+    u1: ( [e:respuestaElegante "* Formal"] ) $conversacionQueEstiloTeGustaMasFormal = 1 \rSPD=80\ La verdad es que las corbatas me sientan bien pero...  ^start(animations/Stand/Emotions/Neutral/Embarrassed_1) \pau=500\ con las manos,  me hago un lío \pau=500 \ ^wait(animations/Stand/Emotions/Neutral/Embarrassed_1) ! Mejor sigo buscando  ! ^gotoReactivate(salida)
+    
+    u1: ( [e:respuestaCasual " * Casual"] ) $conversacionQueEstiloTeGustaMasCasual = 1 \rSPD=80\  me pega la ropa informal \pau=300\ y las gafas me dan un toque... \pau=200\ pero... \pau=200\ o... \pau=50\ pedaleas tú... \pau=50\ o...\pau=50\  nunca podré montar en bicicleta  \pau=200\ ^run(animations/Stand/Emotions/Positive/Laugh_1) ! Mejor sigo buscando ! ^gotoReactivate(salida)
+    
+    u1: ( [e:respuestaDeportivo "* deportivo" ]) $conversacionQueEstiloTeGustaMasDeportivo = 1 \rSPD=80\ ¿ Enserio?  \pau=200\ ¿ me puedes explicar \pau=100\ como piensas que me ponga las zapatillas ? \pau=100\ ^run(animations/Stand/Emotions/Positive/Laugh_1) ¡ No te preocupes ! ... \pau=100\ ¿ cómo vas a estar en todo?... \pau=200\ ¡ si no eres un robot ! ^run(animations/Stand/Emotions/Positive/Laugh_3) ^gotoReactivate(salida)
+    
+    
+##### HABLAR CON UN ROBOT ######
+proposal: %tagCharlar \rSPD=80\ Esto de hablar con un robot, te resultará estraño... \pau=200\ ¿ Estás pensando que en abanca somos unos frikis ? $conversacionPreguntaSiONo="¿ Estás pensando que en abanca somos unos frikis ?"
+
+    u1:([e:conversacionRespuestaSi  "* ~si"] )  $finIdentificacion=1 \rSPD=80\ ¡ Pues no ! \pau=100\ bueno...\pau=100\  quizas un poco   \pau=100\ ^run(animations/Stand/Emotions/Positive/Laugh_3) \pau=200\ pero llevar la inovación en los chips, es lo que tiene...\pau=200\ y en ABANCA explorar el futuro es una obligación. ^gotoReactivate(salida)
+    
+    u1:( [e:conversacionRespuestaNo "* no"] ) $finIdentificacion=1 \rSPD=80\ ^start(animations/Stand/Emotions/Positive/Confident_1) ¡ Entonces Eres de los nuestos ! ^wait(animations/Stand/Emotions/Positive/Confident_1) \pau=400\ Llevas la inovación en el ADN. \pau=200\  ^start(animations/Stand/Emotions/Neutral/Stubborn_1) \pau=300\ Tenemos que quedar... \pau=300\ ¡ Para seguir explorando juntos el futuro ! \pau=00\  ^wait(animations/Stand/Emotions/Neutral/Stubborn_1) $conversacionHablarConUnRobot=1 \pau=100\  ¡ QUE LA FUERZA TE ACOMPAÑE ! ^run(animations/Stand/Emotions/Positive/Laugh_3) ^gotoReactivate(salida)
+    
+    
+    
+##### CARGAR LAS BATERIAS ###### 
+proposal: %tagCharlar \rSPD=80\ Además de cargar las baterías,\pau=100\ no sé que hacer en mi tiempo libre, \pau=200\ tú, ¿ Qué me recomiendas ? \pau=200\ ¿ Practicar un deporte?  \pau=200\ ó  \pau=200\ ¿ Algo más artístico ?$conversacionDeporteOartistico=1
+  
+     u1: ([e:conversacionDeporte "* Deporte" ] ) $finIdentificacion=1 \rSPD=80\ Es una buena idea, pero ^start(animations/Stand/Emotions/Negative/Sad_2) soy bajito para el baloncesto,  \pau=200\ lento para el fútbol, \pau=200\ e inconpatible para la natación ^wait(animations/Stand/Emotions/Negative/Sad_2) \pau=200\ ^start(animations/Stand/Emotions/Positive/Confident_1) Además,\pau=100\ a jugar en equipo ya aprendo cada día en ABANCA ^wait(animations/Stand/Emotions/Positive/Confident_1) ^gotoReactivate(salida)
+     
+    u1: ([e:convereacionArtistico "* artístico" ] ) $finIdentificacion=1 \rSPD=80\ ¡ Me has leido el pensamiento! ^start(animations/Stand/Emotions/Positive/Excited_3) \pau=300\ En cuanto suena la música se alteran mis circuitos, mi cabeza comienza a moverse y ya no puedo parar \pau=100\ ... ^wait(animations/Stand/Emotions/Positive/Excited_3) \pau=500\ si quieres quedamos, y nos marcamos unos pasos $pepperVaila=1 $onStopped=1
+    
+    
+proposal: %salida \pau=800\ Bueno,\pau=300\ ha sido un placer hablar contigo, \pau=500\ que tengas un buen día  $finIdentificacion=1 $onStopped=1

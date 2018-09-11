@@ -1,0 +1,23 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<package version="0.0.0" uuid="oficinas_v6-0496bb">
+  <names>
+    <name lang="en_US">oficinas_v6</name>
+    <name lang="es_ES">oficinasAbanca</name>
+  </names>
+  <supportedLanguages>
+    <language>es_ES</language>
+  </supportedLanguages>
+  <descriptionLanguages>
+    <language>es_ES</language>
+  </descriptionLanguages>
+  <contents>
+    <behaviorContent path="oficinas">
+      <nature>interactive</nature>
+      <permissions/>
+    </behaviorContent>
+  </contents>
+  <requirements>
+    <naoqiRequirement minVersion="2.4" maxVersion="2.4"/>
+    <robotRequirement model="JULIETTE"/>
+  </requirements>
+</package>

@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="es_ES">
+<head>
+	<meta charset="UTF-8">
+	<title>Abanca</title>
+	<link rel="stylesheet" type="text/css" href="styles/estiloso.css" />
+</head>
+<body>
+	
+	<!-- Pantalla que muestra -->
+	<div id="pantallaLogotipo" >
+		<!-- <video src="images/fondo.mp4" autoplay loop muted></video> -->
+		<img src="images/logo.png" alt="">
+	</div>
+
+	<!-- Pantalla con dos opciones de Si o No-->
+	<div class="pantallaPregunta" id="dialogosSiNo" style="display: none;">
+		<div class="cabecera">
+			<img src="images/logo.png" alt="">
+		</div>
+		<div class="contenedor">
+			<div class="pregunta">
+				¿Crees que en Abanca somos unos frikies?
+			</div>
+			<div class="respuesta">
+				<button onclick="respondeSi();">Si</button>
+				<button onclick="respondeNo();">No</button>
+			</div>
+		</div>
+	</div>
+
+	<!-- Pantalla Selfie o Edificio -->
+	<div class="pantallaPregunta" id="dialogoSelfieOEdificio" style="display: none;">
+		<div class="cabecera">
+			<img src="images/logo.png" alt="">
+		</div>
+		<div class="contenedor">
+			<div class="pregunta">
+			</div>
+			<div class="respuesta">
+				<button onclick="respondeSelfie();">Hacer un Selfie</button>
+				<button onclick="respondeEdificio();">Hablar del Edificio</button>
+			</div>
+		</div>
+	</div>
+
+
+	<!-- Pantalla Charla o Edificio -->
+	<div class="pantallaPregunta" id="dialogoCharlaOEdificio" style="display: none;">
+		<div class="cabecera">
+			<img src="images/logo.png" alt="">
+		</div>
+		<div class="contenedor">
+			<div class="pregunta">
+			</div>
+			<div class="respuesta">
+				<button onclick="respondeCharla();">Charlar un ratito</button>
+				<button onclick="respondeMostrarEdificio();">Hacer un selfie</button>
+			</div>
+		</div>
+	</div>
+
+	<!-- Pantalla Estilos -->
+	<div class="pantallaPregunta" id="dialogoEstilo" style="display: none;">
+		<div class="cabecera">
+			<img src="images/logo.png" alt="">
+		</div>
+		<div class="contenedor">
+			<div class="pregunta">
+			</div>
+			<div class="respuesta">
+				<button onclick="respondeElegante();">Formal</button>
+				<button onclick="respondeDeportivo();">Deportivo</button>
+				<button onclick="respondeCasual();">Casual</button>
+			</div>
+		</div>
+	</div>
+
+	<!-- Pantalla ORIGEN GALLEGO -->
+	<div class="pantallaPregunta" id="dialogoOrigen" style="display: none;">
+		<div class="cabecera">
+			<img src="images/logo.png" alt="">
+		</div>
+		<div class="contenedor">
+			<div class="pregunta">
+			</div>
+			<div class="respuesta">
+				<button onclick="respondeGalicia();">Galicia</button>
+				<button onclick="respondeOtro();">Otro</button>
+			</div>
+		</div>
+	</div>
+
+
+	<!-- Pantalla Autoestima -->
+	<div class="pantallaPregunta" id="dialogoAutoestima" style="display: none;">
+		<div class="cabecera">
+			<img src="images/logo.png" alt="">
+		</div>
+		<div class="contenedor">
+			<div class="pregunta">
+			</div>
+			<div class="respuesta">
+				<button onclick="respondeBien();">Bien</button>
+				<button onclick="respondeMal();">Mal</button>
+			</div>
+		</div>
+	</div>
+
+
+	<!-- Pantalla Deporte o Actividad Artistica -->
+	<div class="pantallaPregunta" id="dialogoBailarOActividad" style="display: none;">
+		<div class="cabecera">
+			<img src="images/logo.png" alt="">
+		</div>
+		<div class="contenedor">
+			<div class="pregunta">
+			</div>
+			<div class="respuesta">
+				<button onclick="respondeActividad();">Practicar deporte</button>
+				<button onclick="respondeBaile();">Actividad artística</button>
+			</div>
+		</div>
+	</div>
+
+
+	<!-- Pantalla Recorrido o Servicios -->
+	<div class="pantallaPregunta" id="dialogoRecorridoOServicios" style="display: none;">
+		<div class="cabecera">
+			<img src="images/logo.png" alt="">
+		</div>
+		<div class="contenedor">
+			<div class="pregunta">
+			</div>
+			<div class="respuesta">
+				<button onclick="respuestaRecorrido();">Espíritu</button>
+				<button onclick="respuestaServicios();">Servicios</button>
+			</div>
+		</div>
+	</div>
+
+
+	<!-- Pantalla Foto Twitter -->
+	<div class="pantallaPregunta" id="fotoTwitter" style="display: none;">
+		<div class="cabecera">
+			<img src="images/logo.png" alt="">
+		</div>
+		<div class="contenedor">
+			<div class="foto">
+				<img src="images/local-image.jpg">
+			</div>
+			<div class="respuesta">
+				<button onclick="respuestaMeGusta();">Me gusta</button>
+				<button onclick="respuestaNoMeGusta();">No me gusta</button>
+			</div>
+		</div>
+	</div>
+
+
+
+
+
+
+<script src="scripts/jquery.min.js"></script>
+<!--script src="scripts/qimessaging.js"></script-->
+<script src="/libs/qimessaging/2/qimessaging.js"></script>
+
+<script src="scripts/functions.js"></script>
+
+
+
+</body>
+</html>

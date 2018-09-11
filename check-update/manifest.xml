@@ -1,0 +1,42 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<package version="1.4.0" uuid="check-update">
+ <names>
+  <name lang="en_US">Check Updates</name>
+  <name lang="fr_FR">Mises à jour</name>
+  <name lang="ja_JP">更新チェック</name>
+ </names>
+ <descriptions>
+  <description lang="en_US">Force the Robot to check if there's new applications or system to download from the Store.</description>
+  <description lang="fr_FR">Force le robot à rechercher les mises à jour d'applications ou de système sur le Store.</description>
+  <description lang="ja_JP">アプリケーションの更新をチェック</description>
+ </descriptions>
+ <supportedLanguages>
+  <language>en_US</language>
+  <language>fr_FR</language>
+  <language>ja_JP</language>
+ </supportedLanguages>
+ <contents>
+  <behaviorContent path=".">
+   <nature>interactive</nature>
+   <names>
+    <name lang="en_US">Check Updates</name>
+    <name lang="fr_FR">Mises à jour</name>
+    <name lang="ja_JP">更新チェック</name>
+   </names>
+   <descriptions>
+    <description lang="en_US">Force the Robot to check if there's new applications or system to download from the Store.</description>
+    <description lang="fr_FR">Force le robot à rechercher les mises à jour d'applications ou de système sur le Store.</description>
+    <description lang="ja_JP">アプリケーションの更新をチェック</description>
+   </descriptions>
+   <categories>
+    <category>system</category>
+   </categories>
+   <tags>
+    <tag lang="en_US">Network</tag>
+    <tag lang="en_US">Store</tag>
+    <tag lang="fr_FR">Réseau</tag>
+    <tag lang="fr_FR">Store</tag>
+   </tags>
+  </behaviorContent>
+ </contents>
+</package>

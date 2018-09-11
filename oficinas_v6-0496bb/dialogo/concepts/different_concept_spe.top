@@ -1,0 +1,71 @@
+topic: ~different_concept()
+language: spe
+
+concept: (saludos) [
+Hola
+"buenos dias"
+"buenas tardes"
+buenas
+]
+
+concept: (afirmaciones) [
+vale
+si
+ok
+
+]
+
+concept: (galicia) [
+galicia
+gallego
+"a coruña"
+]
+
+
+concept: (negaciones) [
+No 
+]
+
+concept: (charla) [
+charla
+charlar
+hablar
+conversar 
+]
+
+concept: (charla) [
+charla
+charlar
+hablar
+conversar 
+]
+
+concept: (saludos) [
+hola
+"Buenas Tardes"
+Buenas
+"Buenos dias"
+holi  
+]
+
+
+concept: (entender) [
+"no te he entendido"
+"no te entiendo"
+" me lo repites"
+repites
+repetir
+entender
+entiendo
+entendido
+"no te he escuchado"
+escuchado
+"no te escucho"
+escucho
+" no te he oido"
+oido 
+"¿que?"
+
+]
+
+

@@ -1,0 +1,12 @@
+topic: ~dialogInit()
+language: spe
+
+
+include:../concepts/different_concept_spe.top
+
+# Defining extra concepts out of words or group of words
+#concept:(hello) [hello hi hey "good morning" greetings]
+
+# Catching inputs and triggering outputs
+
+u:(* ~saludos) $DialogStart=1 

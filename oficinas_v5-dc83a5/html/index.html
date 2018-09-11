@@ -1,0 +1,490 @@
+<!DOCTYPE html>
+<html lang="en" >
+<head>
+    <title>ABANCA</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=0.9, user-scalable=no">
+
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
+    <style type="text/css">
+        .bgfullscreen{
+            margin: 0;
+            padding: 0;
+            background: url("img/fondo_inicio.jpg");
+            background-size: 1920px 1200px;
+            background-repeat: no-repeat;
+        }
+
+        .bgpreloader{
+            margin: 0;
+            padding: 0;
+            background: url("img/espera.gif");
+            background-size: 1920px 1200px;
+            background-repeat: no-repeat;
+        }
+
+        .fondo_preguntas{
+            margin: 0;
+            padding: 0;
+            background: url("img/fondo_preguntas.jpg");
+            background-size: 1920px 1200px;
+            background-repeat: no-repeat;
+        }
+        h1{font-size: 85px; font-weight: bold; color: #888888; width: 100%; text-align: center; margin-bottom: 40px}
+
+        .container{padding-top: 260px}
+
+    </style>
+    
+    <script src="js/jquery.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/qimessaging.js"></script>
+    
+
+
+<script>
+    $(document).ready(function() {
+
+        //$("#quienEres").hide()
+
+        //ocultaCapas()
+
+        muestraLogo()
+       
+
+
+        $('#quienEres .dcha img').on('touchstart', function(event) {
+
+            session.service("ALMemory").then(function (ALMemory)
+            {
+                ALMemory.raiseEvent("soyEsaPersonaSI",1);
+            })
+        });
+
+        $('#quienEres .izda img').on('touchstart', function(event) {
+
+            session.service("ALMemory").then(function (ALMemory)
+            {
+                ALMemory.raiseEvent("soyEsaPersonaNO",1);
+            })
+
+        });
+
+
+
+        $('#quieresHablar .dcha img').on('touchstart', function(event) {
+
+            session.service("ALMemory").then(function (ALMemory)
+            {
+                ALMemory.raiseEvent("quieroHablarSI",1);
+            });
+            
+        });
+        $('#quieresHablar .izda img').on('touchstart', function(event) {
+            session.service("ALMemory").then(function (ALMemory)
+            {
+                ALMemory.raiseEvent("quieroHablarNO",1);
+            });
+        });
+
+
+/////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////
+        $('#dialogoAplazar .dcha img').on('touchstart', function(event) {
+
+            session.service("ALMemory").then(function (ALMemory)
+            {
+                ALMemory.raiseEvent("hablarPlazosSI",1);
+            });
+            
+        });
+        $('#dialogoAplazar .izda img').on('touchstart', function(event) {
+            session.service("ALMemory").then(function (ALMemory)
+            {
+                ALMemory.raiseEvent("hablarPlazosNO",1);
+            });
+        });
+
+/////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////
+
+
+/////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////
+        $('#placidoyserena .dcha img').on('touchstart', function(event) {
+           session.service("ALMemory").then(function (ALMemory)
+            {
+                ALMemory.raiseEvent("hablarPlacidoYserenaSI",1);
+            });
+            
+        });
+        $('#placidoyserena .izda img').on('touchstart', function(event) {
+           session.service("ALMemory").then(function (ALMemory)
+            {
+                ALMemory.raiseEvent("hablarPlacidoYserenaNO",1);
+            });
+        });
+
+/////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////
+
+/////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////
+        $('#cuentamePlazos .dcha img').on('touchstart', function(event) {
+            session.service("ALMemory").then(function (ALMemory)
+            {
+                ALMemory.raiseEvent("verVideoPlazosSI",1);
+            });
+            
+        });
+        $('#cuentamePlazos .izda img').on('touchstart', function(event) {
+            session.service("ALMemory").then(function (ALMemory)
+            {
+                ALMemory.raiseEvent("verVideoPlazosNO",1);
+            });
+        });
+
+/////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////
+
+
+        $('#videoPlacidoySerena .dcha img').on('touchstart', function(event) {
+            session.service("ALMemory").then(function (ALMemory)
+            {
+                ALMemory.raiseEvent("verVideoPlacidoySerenaSI",1);
+            });
+            
+        });
+        $('#videoPlacidoySerena .izda img').on('touchstart', function(event) {
+            session.service("ALMemory").then(function (ALMemory)
+            {
+                ALMemory.raiseEvent("verVideoPlacidoySerenaNO",1);
+            });
+        });
+
+//fuenteTranquilidad
+
+/////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////
+
+
+        $('#fuenteTranquilidad .dcha img').on('touchstart', function(event) {
+            session.service("ALMemory").then(function (ALMemory)
+            {
+                ALMemory.raiseEvent("verVideoTranquilidadSerenaSI",1);
+            });
+            
+        });
+        $('#fuenteTranquilidad .izda img').on('touchstart', function(event) {
+            session.service("ALMemory").then(function (ALMemory)
+            {
+                ALMemory.raiseEvent("verVideoTranquilidadSerenaNO",1);
+            });
+        });
+
+        function verFuenteTranquilidad(respuesta){
+            session.service("ALMemory").then(function (ALMemory)
+            {
+                ALMemory.raiseEvent("videoTranquilidad",respuesta);
+            });
+        }
+
+
+// robotDance
+/////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////
+        $('#robotDance .dcha img').on('touchstart', function(event) {
+            session.service("ALMemory").then(function (ALMemory)
+            {
+                ALMemory.raiseEvent("vaileRobotSI",1);
+            });
+            
+        });
+        $('#robotDance .izda img').on('touchstart', function(event) {
+            session.service("ALMemory").then(function (ALMemory)
+            {
+                ALMemory.raiseEvent("vaileRobotNO",1);
+            });
+        });
+
+
+
+        session = new QiSession(function (session) 
+        {
+           // $('.izda .caption').text("connected")
+        }, function () {
+           // $('.izda .caption').text("disssssconnected")
+        });
+
+
+
+        function responde(msg){
+            session.service("ALMemory").then(function (ALMemory)
+            {
+                ALMemory.raiseEvent("tabletTouch",msg);
+            });
+        }
+
+
+        session.service("ALMemory").then(function (ALMemory)
+        {
+            // pone el nombre del user en pantalla quienEres
+            ALMemory.subscriber("nombreTablet").then(function (subscriber)
+            {
+                subscriber.signal.connect(function (_nome)
+                {
+                    $('.nombre').text("Hola, ¿ eres " +_nome + " ?");
+                });
+            });
+
+
+            // muestra el dialogo de los plazos
+            ALMemory.subscriber("muestraDialogoPlazos").then(function (subscriber)
+            {
+                subscriber.signal.connect(function (_nome)
+                {
+                    ocultaLogo()
+                    $("#dialogoAplazar").show()
+                });
+            });
+
+
+            //comienzaApp
+
+
+            ALMemory.subscriber("dialogoPlacido").then(function (subscriber)
+            {
+                subscriber.signal.connect(function (_nome)
+                {
+                    ocultaLogo()
+                    $("#placidoyserena").show()
+                });
+            });
+            ALMemory.subscriber("videoPlazos").then(function (subscriber)
+            {
+                subscriber.signal.connect(function (_nome)
+                {
+                    ocultaLogo()
+                    $("#cuentamePlazos").show()
+                });
+            });
+
+            ALMemory.subscriber("muestraVideoPlacido").then(function (subscriber)
+            {
+                subscriber.signal.connect(function (_nome)
+                {
+                    ocultaLogo()
+                    $("#videoPlacidoySerena").show()
+                });
+            });
+
+
+
+//placidoyserena
+
+            // muestra pantalla ¿eres fulanito?
+            ALMemory.subscriber("identificate").then(function (subscriber)
+            {
+               subscriber.signal.connect(function (_nome)
+                {
+                    ocultaLogo()
+                    $("#quienEres").show()
+                });
+            });
+
+            ALMemory.subscriber("quieresHablar").then(function (subscriber)
+            {
+               subscriber.signal.connect(function (_nome)
+                {
+                    ocultaLogo()
+                    $("#quieresHablar").show()
+                });
+            });
+
+
+            ALMemory.subscriber("finIdentificacion").then(function (subscriber)
+            {
+               subscriber.signal.connect(function (_nome)
+                {
+                    
+                    muestraLogo()
+                });
+            });
+
+            ALMemory.subscriber("videoFuenteTranquilidad").then(function (subscriber)
+            {
+               subscriber.signal.connect(function (_nome)
+                {
+                    ocultaLogo()
+                    $("#fuenteTranquilidad").show()
+                });
+            });
+
+            ALMemory.subscriber("verVailarAlRobot").then(function (subscriber)
+            {
+               subscriber.signal.connect(function (_nome)
+                {
+                    ocultaLogo()
+                    $("#robotDance").show()
+                });
+            });
+
+        });
+
+///////////////////////////////////////////////////////////////////////
+
+
+
+        function muestraPreloader(){
+            ocultaCapas()
+            $("div.container").removeClass("fondo_preguntas")
+            $("body").addClass("bgpreloader")
+        }
+
+        function ocultaPreloader(){
+            $("body").removeClass("bgpreloader")
+        }
+
+
+        function ocultaCapas(){
+            $("div.row:visible").hide()
+        }
+
+
+       function muestraLogo(){
+            ocultaCapas()
+            $("body").removeClass("fondo_preguntas")
+            $("body").addClass("bgfullscreen")
+       }
+
+        function ocultaLogo(){
+            ocultaCapas()
+            $("body").removeClass("bgfullscreen")
+            $("body").addClass("fondo_preguntas")
+       }
+
+    })
+
+
+
+</script>
+</head>
+
+<body>
+    <div class="container " >
+        <!-- identificacion -->
+        <div class="row" id="quienEres">
+            <h1 class="nombre">nombre del usuario</h1>
+
+            <div class="col-md-6 izda" style="text-align: right; vertical-align: right">
+                <img src="img/respuesta_no.gif" alt="no"   style="width:100%;">
+            </div>
+
+            <div class="col-md-6 dcha" >
+                <img src="img/respuesta_si.gif" alt="si"  style="width:100%">
+            </div>
+
+        </div>
+
+        <!-- quieres hablar -->
+
+        <div class="row" id="quieresHablar">
+            <h1>¿ quieres hablar un poco ?</h1>
+
+            <div class="col-md-6 izda" style="text-align: right; vertical-align: right">
+                <img src="img/respuesta_no.gif" alt="no"   style="width:100%;">
+            </div>
+
+            <div class="col-md-6 dcha" >
+                <img src="img/respuesta_si.gif" alt="si"  style="width:100%">
+            </div>
+
+        </div>
+
+
+
+
+        <div class="row" id="dialogoAplazar">
+            <h1>¿ que me dices ?</h1>
+
+            <div class="col-md-6 izda" style="text-align: right; vertical-align: right">
+                <img src="img/respuesta_no.gif" alt="no"   style="width:100%;">
+            </div>
+
+            <div class="col-md-6 dcha" >
+                <img src="img/respuesta_si.gif" alt="si"  style="width:100%">
+            </div>
+
+        </div>
+
+
+        <div class="row" id="placidoyserena">
+            <h1>¿ conoces a plácido y serena ?</h1>
+
+            <div class="col-md-6 izda" style="text-align: right; vertical-align: right">
+                <img src="img/respuesta_no.gif" alt="no"   style="width:100%;">
+            </div>
+
+            <div class="col-md-6 dcha" >
+                <img src="img/respuesta_si.gif" alt="si"  style="width:100%">
+            </div>
+
+        </div>
+
+        <div class="row" id="cuentamePlazos">
+            <h1>¿ te lo cuento ?</h1>
+
+            <div class="col-md-6 izda" style="text-align: right; vertical-align: right">
+                <img src="img/respuesta_no.gif" alt="no"   style="width:100%;">
+            </div>
+
+            <div class="col-md-6 dcha" >
+                <img src="img/respuesta_si.gif" alt="si"  style="width:100%">
+            </div>
+
+        </div>
+
+
+        <div class="row" id="videoPlacidoySerena">
+            <h1>¿ quieres saber cómo ?</h1>
+
+            <div class="col-md-6 izda" style="text-align: right; vertical-align: right">
+                <img src="img/respuesta_no.gif" alt="no"   style="width:100%;">
+            </div>
+
+            <div class="col-md-6 dcha" >
+                <img src="img/respuesta_si.gif" alt="si"  style="width:100%">
+            </div>
+
+        </div>
+
+
+        <div class="row" id="fuenteTranquilidad">
+            <h1>¿ quieres conocer la fuente de su tranquilidad ?</h1>
+
+            <div class="col-md-6 izda" style="text-align: right; vertical-align: right">
+                <img src="img/respuesta_no.gif" alt="no"   style="width:100%;">
+            </div>
+
+            <div class="col-md-6 dcha" >
+                <img src="img/respuesta_si.gif" alt="si"  style="width:100%">
+            </div>
+
+        </div>
+
+        <div class="row" id="robotDance">
+            <h1>¿ que te parece si vailamos un poco ?</h1>
+
+            <div class="col-md-6 izda" style="text-align: right; vertical-align: right">
+                <img src="img/respuesta_no.gif" alt="no"   style="width:100%;">
+            </div>
+
+            <div class="col-md-6 dcha" >
+                <img src="img/respuesta_si.gif" alt="si"  style="width:100%">
+            </div>
+
+        </div>
+
+    </div>
+</body>

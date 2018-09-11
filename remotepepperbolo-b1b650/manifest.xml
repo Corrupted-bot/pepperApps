@@ -1,0 +1,29 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<package version="0.0.0" uuid="remotepepperbolo-b1b650">
+  <names>
+    <name lang="en_US">remotePepperBolo</name>
+    <name lang="es_ES">remotePepperBolo</name>
+  </names>
+  <supportedLanguages>
+    <language>es_ES</language>
+    <language>en_US</language>
+  </supportedLanguages>
+  <descriptionLanguages>
+    <language>es_ES</language>
+    <language>en_US</language>
+  </descriptionLanguages>
+  <contents>
+    <behaviorContent path="behavior_1">
+      <userRequestable/>
+      <nature>interactive</nature>
+      <triggerSentences/>
+      <loadingResponses/>
+      <autonomous/>
+      <permissions/>
+    </behaviorContent>
+  </contents>
+  <requirements>
+    <naoqiRequirement maxVersion="2.4" minVersion="2.4"/>
+    <robotRequirement model="JULIETTE"/>
+  </requirements>
+</package>

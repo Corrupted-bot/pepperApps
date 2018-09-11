@@ -1,0 +1,19 @@
+topic: ~mood()
+language: spe
+
+concept: (positivo) [
+bien
+"muy bien"
+Genial
+Contento
+Feliz
+
+]
+concept: (negativo) [
+mal
+regular
+cansado
+triste
+nervioso
+
+]

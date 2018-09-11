@@ -1,0 +1,117 @@
+*, body {
+	height: 100%;
+	width: 100%;
+	margin: 0;
+	padding: 0;
+}
+
+/*** PANTALLA QUE MUESTRA SOLO EL LOGOTIPO ***/
+#pantallaLogotipo {
+	width: 100%;
+	height: 100%;
+	display: flex;
+    align-items: center;
+    overflow: hidden;
+
+}
+
+#pantallaLogotipo img {
+	width: 80%;
+	height: auto;
+	margin: auto;
+}
+
+#pantallaLogotipo video {
+	/* Le ponemos tamaños minimos e independiente de scroll*/
+	position: absolute;
+	height: auto;
+	width: auto;
+	min-width: 100%;
+	min-height: 100%;
+	/* Para centrar el video*/
+	top: 50%;
+	left: 50%;
+	transform: translateX(-50%) translateY(-50%);
+	/* Para que el video este por detras, cuanto mayor sea zindex mas delante*/
+	z-index: -1;
+	overflow: hidden;
+}
+
+
+/*** DIALOGO SI-NO ***/
+
+.pantallaPregunta {
+	height: 100%;
+	width: 100%;
+}
+
+.pantallaPregunta .cabecera {
+	display: block;
+	height: 10%;
+	width: 100%;
+	text-align: center;
+	box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+	padding: 20px 0;
+}
+
+.pantallaPregunta .cabecera img {
+	height: 100%;
+	width: auto;
+}
+
+.pantallaPregunta .contenedor{
+	display: block;
+	height: calc( 90% - 144px );
+	width: 80%;
+	padding: 50px 0;
+	margin: 0 auto;
+}
+
+.pantallaPregunta .pregunta {
+    height: 50%;
+    overflow: auto;
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    flex-direction: column;
+    font-size: 80px;
+    color: #3466c5;
+    text-align: center;
+}
+
+
+.pantallaPregunta .respuesta {
+	display: flex;
+	height: 50%;
+    align-items: center;
+}
+
+.pantallaPregunta .respuesta button {
+	border: 0;
+	background-color: #3466c5;
+	color: white;
+	height: 50%;
+	margin: 10px;
+	font-size: 60px;	
+}
+
+.pantallaPregunta .respuesta button:focus {
+	background-color: #446dbb;
+	z-index: 99;
+	box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+}
+
+
+.pantallaPregunta .foto {
+    height: 70%;
+    display: block;
+   	margin-bottom: -40px;
+    text-align: center;
+}
+
+.pantallaPregunta .foto img
+{
+	height: 100%;
+	width: auto;
+}
+

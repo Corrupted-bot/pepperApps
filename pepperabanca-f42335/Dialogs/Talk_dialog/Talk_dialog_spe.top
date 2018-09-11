@@ -1,0 +1,249 @@
+topic: ~Talk_dialog()
+language: spe
+
+
+include:../concepts/names_spe.top
+include:../concepts/mood_spe.top
+include:../concepts/different_concept_spe.top
+
+proposal: %nombreVacio
+
+%script
+import time
+from naoqi import ALProxy
+try:
+    mem = ALProxy('ALMemory')
+    sexoCli = mem.insertData('Abanca/pepperTalk/SinNombre', ' ')
+    mem.raisEvent('start',1)
+except Exception as ie:
+    mem.raiseEvent('error', "Error en script dialog:")
+    pass              
+%script
+
+u:(e:StopDialog) $onStopped=1
+
+############################## FASE PRESENTACIÓN ######################################################################################################################################
+
+u:(e:onStart) \rSPD=80\   Hola  \pau=200\ ^gotoReactivate(nombreVacio)  ^run(animations/Stand/Gestures/Hey_2) me llamo  R 4 \pau=300\ soy el robot de protocolo de ABANCA y me encanta conocer gente nueva \pau=400\ ¿Tu como te llamas?.^gotoReactivate(name)  
+
+proposal: %name 
+    u1:(* _~nameMen)  $Abanca/pepperTalk/NombreEscuchado=$1 \rSPD=80\ ¿ Has dicho $Abanca/pepperTalk/NombreEscuchado ?  $Abanca/pepperTalk/preguntaSiONo="¿ Has dicho $Abanca/pepperTalk/NombreEscuchado ?"
+        u2:( [e:Abanca/pepperTalk/respuestaSi "* si"] ) $Abanca/pepperTalk/logo= 1 \rSPD=80\ ^gotoReactivate(BienvenidaHombre)
+        u2:([e:Abanca/pepperTalk/respuestaNo "* no" ] ) $Abanca/pepperTalk/logo= 1 \rSPD=80\  ^gotoReactivate(repetir)
+    u1:(* _~nameWomen) \rSPD=80\ $Abanca/pepperTalk/NombreEscuchado=$1 ¿ Has dicho $Abanca/pepperTalk/NombreEscuchado ? $Abanca/pepperTalk/preguntaSiONo="¿ Has dicho $Abanca/pepperTalk/NombreEscuchado ?"
+        u2:( [e:Abanca/pepperTalk/respuestaSi "* si"]  ) $Abanca/pepperTalk/logo= 1 \rSPD=80\ ^gotoReactivate(BienvenidaMujer)  
+        u2:( [e:Abanca/pepperTalk/respuestaNo "* no" ] ) $Abanca/pepperTalk/logo= 1 \rSPD=80\   ^gotoReactivate(repetir)
+            
+    u1:(e:Dialog/NotUnderstood) \rSPD=80\ Perdona, estoy un poco sordo  ^gotoReactivate(repetir2)
+
+proposal: %repetir \rSPD=80\  Perdona, estoy un poco sordo ^run(animations/Stand/Emotions/Positive/Laugh_3)  ¿ Me repites tu nombre ? \pau=100\ 
+  
+    u1:(* ~nameWomen) \rSPD=80\ ^gotoReactivate(BienvenidaNeutro)
+    u1:(* ~nameMen) \rSPD=80\   ^gotoReactivate(BienvenidaNeutro)
+    u1:(e:Dialog/NotUnderstood) \rSPD=80\ ^gotoReactivate(BienvenidaNeutro)
+    
+proposal: %repetir2 \rSPD=80\ \pau=300\ ^run(animations/Stand/Emotions/Positive/Laugh_3)  y no te he entendido bien ¿ Puedes repetirme tu nombre ? 
+
+    u1:(* _~nameMen) \rSPD=80\  $Abanca/pepperTalk/NombreEscuchado=$1 ¿ Has dicho $Abanca/pepperTalk/NombreEscuchado ?  $Abanca/pepperTalk/preguntaSiONo="¿ Has dicho $Abanca/pepperTalk/NombreEscuchado ?"
+        u2:( [e:Abanca/pepperTalk/respuestaSi "* si"] ) $Abanca/pepperTalk/logo= 1 \rSPD=80\ ^gotoReactivate(BienvenidaHombre)
+        u2:( [e:Abanca/pepperTalk/respuestaNo "* no" ]  ) $Abanca/pepperTalk/logo= 1 \rSPD=80\ ¿ Me repites tu nombre? 
+            u3:(* ~nameWomen) ^gotoReactivate(BienvenidaNeutro)
+            u3:(* ~nameMen) \rSPD=80\  ^gotoReactivate(BienvenidaNeutro)
+            u3:(e:Dialog/NotUnderstood) \rSPD=80\ ^gotoReactivate(BienvenidaNeutro)
+        
+            
+    u1:(* _~nameWomen) \rSPD=80\ $Abanca/pepperTalk/NombreEscuchado=$1 ¿ Has dicho $Abanca/pepperTalk/NombreEscuchado ? $Abanca/pepperTalk/preguntaSiONo="¿ Has dicho $Abanca/pepperTalk/NombreEscuchado ?"
+        u2:([e:Abanca/pepperTalk/respuestaSi "* si"] ) $Abanca/pepperTalk/logo= 1 \rSPD=80\ ^gotoReactivate(BienvenidaMujer)
+        u2:( [e:Abanca/pepperTalk/respuestaNo "* no" ]  ) $Abanca/pepperTalk/logo= 1 \rSPD=80\ ¿ Me repites tu nombre ? 
+            u3:(* ~nameWomen) \rSPD=80\  ^gotoReactivate(BienvenidaNeutro)
+            u3:(* ~nameMen) \rSPD=80\  ^gotoReactivate(BienvenidaNeutro)
+            u3:(e:Dialog/NotUnderstood) \rSPD=80\ ^gotoReactivate(BienvenidaNeutro)
+        
+        
+    u1:(e:Dialog/NotUnderstood3) \rSPD=80\ ^gotoReactivate(BienvenidaNeutro)
+
+    
+proposal: %BienvenidaHombre \rSPD=80\ ^run(animations/Stand/Emotions/Positive/Enthusiastic_1)  Encantado de conocerte $Abanca/pepperTalk/NombreCliente=$Abanca/pepperTalk/NombreEscuchado $Abanca/pepperTalk/NombreCliente $Abanca/pepperTalk/sexoCliente=masculino \pau=200\ bienvenido a la nueva sede de abanca en Madrid \pau=300\ ¿ Es la primera vez que vienes ? $Abanca/pepperTalk/preguntaSiONo="¿ Es la primera vez que vienes ?" ^gotoReactivate(VisitaAnterior)
+proposal: %BienvenidaMujer \rSPD=80\ ^run(animations/Stand/Emotions/Positive/Enthusiastic_1) $Abanca/pepperTalk/NombreCliente=$Abanca/pepperTalk/NombreEscuchado $Abanca/pepperTalk/sexoCliente=femenino Encantado de conocerte $Abanca/pepperTalk/NombreCliente \pau=200\ bienvenida a la nueva sede de abanca en Madrid \pau=300\ ¿ Es la primera vez que vienes?   $Abanca/pepperTalk/preguntaSiONo="¿ Es la primera vez que vienes ?" ^gotoReactivate(VisitaAnterior)
+proposal: %BienvenidaNeutro \rSPD=80\ ^run(animations/Stand/Emotions/Positive/Enthusiastic_1) $Abanca/pepperTalk/NombreCliente=$Abanca/pepperTalk/SinNombre $Abanca/pepperTalk/sexoCliente=neutro Encantado de conocerte \pau=200\ te doy la bienvenida a la nueva sede de abanca en Madrid \pau=300\ ¿ Es la primera vez que vienes? $Abanca/pepperTalk/preguntaSiONo="¿ Es la primera vez que vienes ?" ^gotoReactivate(VisitaAnterior)
+   
+proposal: %VisitaAnterior 
+    u1:([e:Abanca/pepperTalk/respuestaSi "* si"] ) $Abanca/pepperTalk/logo=1 \rSPD=80\ Pues yo vivo aqui \pau=200\ y ¡ me gusta mucho !  ^run(animations/Stand/Emotions/Positive/Happy_1) Es abierto y funcional \pau=300\ ¡ como yo !  \pau=500\   y ha sido creado para escuchar y responder...\pau=200\ que es mi especialidad. \pau=500\   ¿ Tienes un minuto para conocernos? $Abanca/pepperTalk/preguntaSiONo= " ¿ Tienes un minuto para conocernos?"
+        u2:([e:Abanca/pepperTalk/respuestaSi  " * ~afirmaciones"] ) $Abanca/pepperTalk/logo=1  \rSPD=80\ ^start(animations/Stand/Gestures/Enthusiastic_5) \pau=500\   ¡ Genial ! ^run(animations/Stand/Gestures/Enthusiastic_5) $Abanca/pepperTalk/logo=1 ^gotoReactivate(CharlaAleatoria)
+        u2:([e:Abanca/pepperTalk/respuestaNo "* no" ] ) $Abanca/pepperTalk/logo=1  \rSPD=80\ Entonces, ¿ Hablamos del edificio o nos hacemos un selfi ? $Abanca/pepperTalk/preguntaSelfieOEdificio="¿ Hablamos del edificio o nos hacemos un selfie ?" ##### PREGUNTA SELFIE O EDIFICIO
+            u3: ( [e:Abanca/pepperTalk/respuestaEdificio "* edificio"] ) $Abanca/pepperTalk/logo=1 ^gotoReactivate(explicacionEdificio)
+            u3: ( [e:Abanca/pepperTalk/respuestaSelfie "*selfi"] ) $Abanca/pepperTalk/logo=1 $Abanca/pepperSelfie/Selfie=1
+    u1:([e:Abanca/pepperTalk/respuestaNo "* no" ]) $Abanca/pepperTalk/logo=1 \rSPD=80\ Entonces $Abanca/pepperTalk/NombreCliente \pau=200\ ¿ Charlamos un ratito o nos hacemos un selfi ? $Abanca/pepperTalk/preguntaCharlaOselfie =" ¿ Charlamos un ratito o nos hacemos un selfie ? " ^gotoReactivate(charlaOselfie) 
+ 
+
+proposal: %charlaOselfie
+    u1: ( [e:Abanca/pepperTalk/respuestaCharla "* ~charla" ]) $Abanca/pepperTalk/logo=1 \rSPD=80\ ^start(animations/Stand/Gestures/Enthusiastic_5) \pau=500\   ¡ Genial ! ^wait(animations/Stand/Gestures/Enthusiastic_5) ^gotoReactivate(CharlaAleatoria)
+    u1: ( [e:Abanca/pepperTalk/respuestaSelfie "* selfie"] )  $Abanca/pepperTalk/logo=1 $Abanca/pepperSelfie/Selfie=1
+    u1: ( * ~entender)  $Abanca/pepperTalk/logo=1 ^gotoReactivate(charlaOselfie2)
+    u1:(e:Dialog/NotUnderstood) \rSPD=80\ ¿ Que has dicho ? ^gotoReactivate(charlaObuscar3)
+
+proposal: %charlaOselfie2 ¿ Prefieres charlar un ratito o prefieres que nos hagamos un selfi ?
+    u1: ([e:Abanca/pepperTalk/respuestaCharla "* ~charla" ]) $Abanca/pepperTalk/logo=1 \rSPD=80\ ¡ Genial ! \pau=100\ ^run(animations/Stand/Gestures/Enthusiastic_5) ^gotoReactivate(CharlaAleatoria)
+    u1: ( [e:Abanca/pepperTalk/respuestaSelfie "* selfie"] )  $Abanca/pepperTalk/logo=1 $Abanca/pepperSelfie/Selfie=1
+    u1:(e:Dialog/NotUnderstood) \rSPD=80\ ¿ Que has dicho ? ^gotoReactivate(charlaObuscar3)
+      
+proposal: %charlaObuscar3
+    u1: ( [e:Abanca/pepperTalk/respuestaCharla "* ~charla" ]) $Abanca/pepperTalk/logo=1 \rSPD=80\ ^start(animations/Stand/Gestures/Enthusiastic_5) \pau=500\   ¡ Genial ! ^wait(animations/Stand/Gestures/Enthusiastic_5) ^gotoReactivate(CharlaAleatoria)
+    u1: ( [e:Abanca/pepperTalk/respuestaSelfie "* selfie"] )  $Abanca/pepperTalk/logo=1 $Abanca/pepperSelfie/Selfie=1
+    u1: ( * ~entender)  $Abanca/pepperTalk/logo=1 ^gotoReactivate(charlaOselfie2)
+    u1:(e:Dialog/NotUnderstood3) $Abanca/pepperTalk/logo=1 \rSPD=80\ A mi me gustaría mucho hablar contigo ^gotoReactivate(CharlaAleatoria)
+
+proposal: %CharlaAleatoria \pau=1000\  ^gotoRandom(tagCharla) 
+
+########################## FASE RECONOCIMENTO ######################################################################################################################################
+
+    ############# Charla1 ################
+        
+proposal: %tagCharla \rSPD=80\ Oye, \pau=200\ ¡ Me gusta tu estilo...! \pau=200\ tú a mi, ¿ cómo me ves ? \pau=200\ ¿ Formal... ?\pau=200\ ¿ casual...? \pau=200\ o ¿ más bien deportivo... ? \pau=200\ $Abanca/pepperTalk/preguntaEstilos=" ¿ Qué estilo te gusta más?, ¿ Elegante Casual o Deportivo? "
+    u1: ( [e:Abanca/pepperTalk/respuestaElegante "* Formal"] ) $Abanca/pepperTalk/logo=1 \rSPD=80\ La verdad es que las corbatas me sientan bien pero...  ^start(animations/Stand/Emotions/Neutral/Embarrassed_1) \pau=500\ con las manos,  me hago un lío \pau=500 \ ^wait(animations/Stand/Emotions/Neutral/Embarrassed_1) ! Mejor sigo buscando  !\ pau=1000\   ^gotoReactivate(fincharla)
+    u1: ( [e:Abanca/pepperTalk/respuestaCasual " * Casual"] ) $Abanca/pepperTalk/logo=1 \rSPD=80\  me pega la ropa informal \pau=300\ y las gafas me dan un toque... \pau=200\ pero... \pau=200\ o... \pau=50\ pedaleas tú... \pau=50\ o...\pau=50\  nunca podré montar en bicicleta  \pau=200\ ^run(animations/Stand/Emotions/Positive/Laugh_1) ! Mejor sigo buscando ! \pau=1000\  ^gotoReactivate(fincharla)   
+    u1: ( [e:Abanca/pepperTalk/respuestaDeportivo "* deportivo" ]) $Abanca/pepperTalk/logo=1 \rSPD=80\ ¿ Enserio?  \pau=200\ ¿ me puedes explicar \pau=100\ como piensas que me ponga las zapatillas ? \pau=100\ ^run(animations/Stand/Emotions/Positive/Laugh_1) ¡ No te preocupes ! ... \pau=100\ ¿ cómo vas a estar en todo?... \pau=200\ ¡ si no eres un robot ! ^run(animations/Stand/Emotions/Positive/Laugh_3)  \pau=1000\   ^gotoReactivate(fincharla)
+    u1: ( * ~entender) ^gotoReactivate(charla1)
+    
+    #repetir#
+    
+proposal: %charla1 \rSPD=80\ He dicho que  \pau=200\ \pau=200\ ¡ Me gusta tu estilo...! \pau=200\ tú a mi, ¿ cómo me ves ? \pau=200\ ¿ Formal... ?\pau=200\ ¿ casual...? \pau=200\ o ¿ más bien deportivo... ? \pau=200\ $Abanca/pepperTalk/preguntaEstilos=" ¿ Qué estilo te gusta más?, ¿ Elegante Casual o Deportivo? "
+    u1: ( [e:Abanca/pepperTalk/respuestaElegante "* Formal"] ) $Abanca/pepperTalk/logo=1 \rSPD=80\ La verdad es que las corbatas me sientan bien pero...  ^start(animations/Stand/Emotions/Neutral/Embarrassed_1) \pau=500\ con las manos,  me hago un lío \pau=500 \ ^wait(animations/Stand/Emotions/Neutral/Embarrassed_1) ! Mejor sigo buscando  !\ pau=1000\   ^gotoReactivate(fincharla)
+    u1: ( [e:Abanca/pepperTalk/respuestaCasual " * Casual"] ) $Abanca/pepperTalk/logo=1 \rSPD=80\  me pega la ropa informal \pau=300\ y las gafas me dan un toque... \pau=200\ pero... \pau=200\ o... \pau=50\ pedaleas tú... \pau=50\ o...\pau=50\  nunca podré montar en bicicleta  \pau=200\ ^run(animations/Stand/Emotions/Positive/Laugh_1) ! Mejor sigo buscando ! \pau=1000\  ^gotoReactivate(fincharla)   
+    u1: ( [e:Abanca/pepperTalk/respuestaDeportivo "* deportivo" ]) $Abanca/pepperTalk/logo=1 \rSPD=80\ ¿ Enserio?  \pau=200\ ¿ me puedes explicar \pau=100\ como piensas que me ponga las zapatillas ? \pau=100\ ^run(animations/Stand/Emotions/Positive/Laugh_1) ¡ No te preocupes ! ... \pau=100\ ¿ cómo vas a estar en todo?... \pau=200\ ¡ si no eres un robot ! ^run(animations/Stand/Emotions/Positive/Laugh_3)  \pau=1000\   ^gotoReactivate(fincharla)
+    u1: ( * ~entender) ^gotoReactivate(charla1)
+    
+proposal: %fincharla \rSPD=80\ \pau=1000\ ^gotoReactivate(ContinuarHablando)
+
+    #################### charla2 #####################
+  
+proposal: %tagCharla \rSPD=80\ Esto de hablar con un robot, te resultará estraño... \pau=200\ ¿ Estás pensando que en abanca somos unos frikis ? $Abanca/pepperTalk/preguntaSiONo="¿ Estás pensando que en abanca somos unos frikis ?"
+    u1:([e:Abanca/pepperTalk/respuestaSi  "* ~afirmaciones"] )  $Abanca/pepperTalk/logo=1 \rSPD=80\ ¡ Pues no ! \pau=100\ bueno...\pau=100\  quizas un poco   \pau=100\ ^run(animations/Stand/Emotions/Positive/Laugh_3) \pau=200\ pero llevar la inovación en los chips, es lo que tiene...\pau=200\ y en ABANCA explorar el futuro es una obligación. \pau=1000\   ^gotoReactivate(ContinuarHablando)
+    u1:( [e:Abanca/pepperTalk/respuestaNo "* no"] ) $Abanca/pepperTalk/logo=1 \rSPD=80\ ^start(animations/Stand/Emotions/Positive/Confident_1) ¡ Entonces Eres de los nuestos ! ^wait(animations/Stand/Emotions/Positive/Confident_1) \pau=400\ Llevas la inovación en el ADN. \pau=200\  ^start(animations/Stand/Emotions/Neutral/Stubborn_1) \pau=300\ Tenemos que quedar... \pau=300\ ¡ Para seguir explorando juntos el futuro ! \pau=00\  ^wait(animations/Stand/Emotions/Neutral/Stubborn_1) \pau=100\  ¡ QUE LA FUERZA TE ACOMPAÑE ! ^run(animations/Stand/Emotions/Positive/Laugh_3)  \pau=1000\ ^gotoReactivate(ContinuarHablando)
+    u1:(* ~entender) $Abanca/pepperTalk/logo=1  \rSPD=80\ He dicho que \pau=200\ ^gotoReactivate(charla2) 
+    
+    #repetir#
+    
+proposal: %charla2 \rSPD=80\ esto de hablar con un robot, te resultará estraño... \pau=200\ ¿ Estás pensando que en abanca somos unos frikis ? $Abanca/pepperTalk/preguntaSiONo="¿ Estás pensando que en abanca somos unos frikis ?"
+    u1:([e:Abanca/pepperTalk/respuestaSi  "* ~afirmaciones"] )  $Abanca/pepperTalk/logo=1 \rSPD=80\ ¡ Pues no ! \pau=100\ bueno...\pau=100\  quizas un poco   \pau=100\ ^run(animations/Stand/Emotions/Positive/Laugh_3) \pau=200\ pero llevar la inovación en los chips, es lo que tiene...\pau=200\ y en ABANCA explorar el futuro es una obligación. \pau=1000\   ^gotoReactivate(ContinuarHablando)
+     u1:( [e:Abanca/pepperTalk/respuestaNo "* no"] ) $Abanca/pepperTalk/logo=1 \rSPD=80\ ^start(animations/Stand/Emotions/Positive/Confident_1) ¡ Entonces Eres de los nuestos ! ^wait(animations/Stand/Emotions/Positive/Confident_1) \pau=400\ Llevas la inovación en el ADN. \pau=200\  ^start(animations/Stand/Emotions/Neutral/Stubborn_1) \pau=300\ Tenemos que quedar... \pau=300\ ¡ Para seguir explorando juntos el futuro ! \pau=00\  ^wait(animations/Stand/Emotions/Neutral/Stubborn_1) \pau=100\  ¡ QUE LA FUERZA TE ACOMPAÑE ! ^run(animations/Stand/Emotions/Positive/Laugh_3)  \pau=1000\ ^gotoReactivate(ContinuarHablando)
+    ################# charla 3 ######################
+    
+proposal: %tagCharla \rSPD=80\ Yo... \pau=100\ como tú, también vine de París ^run(animations/Stand/Emotions/Positive/Laugh_2) \pau=100\ aunque soy Gallego, vivo en Madrid y me gusta todo el mundo... \pau=100\ y tú... , ¿ De dónde Eres? $Abanca/pepperTalk/preguntaDondeEres= "¿De dónde eres ?"
+    u1:( [e:Abanca/pepperTalk/respuestaGalicia " * ~galicia" ]) $Abanca/pepperTalk/logo=1 \rSPD=80\ ^start(animations/Stand/Emotions/Neutral/Surpr1se_2)  \pau=200\ ¿ De verdad ? \pau= 200\ ^wait(animations/Stand/Emotions/Neutral/Surprise_2) \pau= 100\ Entonces te pasa lo que a mi \pau=200\ ¡ No puedes ni subir ni bajar escaleras ! ^run(animations/Stand/Emotions/Positive/Laugh_3) \pau=200\ ^start(animations/Stand/Waiting/Innocent_1) Discúlpame... es que me ¡ encanta la retranca! ^wait(animations/Stand/Waiting/Innocent_1) \pau= 500\ ^gotoReactivate(ContinuarHablando)
+    
+    u1: ([e:Abanca/pepperTalk/respuestaOtro e:Dialog/NotUnderstood ]) $Abanca/pepperTalk/logo=1 \rSPD=80\ ^start(animations/Stand/Emotions/Positive/Excited_3) \pau=50\ ¡ Que bien !\pau=50\ ¡ Me encanta cómo sóis ! \pau=100\ ^wait(animations/Stand/Emotions/Positive/Excited_3) \pau= 400\ De donde yo vengo, \pau= 200\ ^start(animations/Stand/Emotions/Negative/Bored_2) \pau= 200\ todos somos iguales y es muy aburrido. \pau= 200\  ^start(animations/Stand/Emotions/Negative/Bored_2)  \pau= 400\ En ABANCA cada persona es única y la diversidad es un valor que me hace muy feliz ^run(animations/Stand/Emotions/Positive/Happy_3) ^gotoReactivate(ContinuarHablando)
+    u1:(* ~entender) $Abanca/pepperTalk/logo=1  He dicho que si \pau=200\ ^gotoReactivate(charla3)
+
+    
+    #repetir#
+    
+proposal: %charla3 \rSPD=80\ Yo... \pau=100\ como tú, también vine de París ^run(animations/Stand/Emotions/Positive/Laugh_2) \pau=100\ aunque soy Gallego, vivo en Madrid y me gusta todo el mundo... \pau=100\ y tú... , ¿ De dónde Eres? $Abanca/pepperTalk/preguntaDondeEres= "¿De dónde eres ?"
+    u1:( [e:Abanca/pepperTalk/respuestaGalicia " * ~galicia" ]) $Abanca/pepperTalk/logo=1 \rSPD=80\ ^start(animations/Stand/Emotions/Neutral/Surpr1se_2)  \pau=200\ ¿ De verdad ? \pau= 200\ ^wait(animations/Stand/Emotions/Neutral/Surprise_2) \pau= 100\ Entonces te pasa lo que a mi \pau=200\ ¡ No puedes ni subir ni bajar escaleras ! ^run(animations/Stand/Emotions/Positive/Laugh_3) \pau=200\ ^start(animations/Stand/Waiting/Innocent_1) Discúlpame... es que me ¡ encanta la retranca! ^wait(animations/Stand/Waiting/Innocent_1) \pau= 500\ ^gotoReactivate(ContinuarHablando)
+    
+    u1: ([e:Abanca/pepperTalk/respuestaOtro e:Dialog/NotUnderstood ]) $Abanca/pepperTalk/logo=1 \rSPD=80\ ^start(animations/Stand/Emotions/Positive/Excited_3) \pau=50\ ¡ Que bien !\pau=50\ ¡ Me encanta cómo sóis ! \pau=100\ ^wait(animations/Stand/Emotions/Positive/Excited_3) \pau= 400\ De donde yo vengo, \pau= 200\ ^start(animations/Stand/Emotions/Negative/Bored_2) \pau= 200\ todos somos iguales y es muy aburrido. \pau= 200\  ^start(animations/Stand/Emotions/Negative/Bored_2)  \pau= 400\ En ABANCA cada persona es única y la diversidad es un valor que me hace muy feliz ^run(animations/Stand/Emotions/Positive/Happy_3) ^gotoReactivate(ContinuarHablando)
+    u1:(* ~entender) $Abanca/pepperTalk/logo=1  He dicho que si \pau=200\ ^gotoReactivate(charla3)
+
+    
+ 
+############################################## ANTESdeVALORES, PREGUNTAR SI QUIERES SEGUIR HABLANDO ###################################################################
+   
+proposal: %ContinuarHablando \rSPD=80\ ¿ Te apetece seguir hablando ? $Abanca/pepperTalk/preguntaSiONo= "¿ Te apetece seguir hablando?" 
+    u1:( [e:Abanca/pepperTalk/respuestaSi  " * ~afirmaciones"]) $Abanca/pepperTalk/logo=1 \rSPD=80\  ¡Genial ! \pau=200\ ^gotoRandom(valores)
+    u1: ([e:Abanca/pepperTalk/respuestaNo " * no"]) $Abanca/pepperTalk/logo=1 \rSPD=80\ \pau=500\  ^gotoReactivate(SelfieOedificio)
+    
+
+############################################### VALORES ###############################################################################################################
+ 
+    ########### valores1 ###########  
+    
+proposal: %valores \rSPD=80\  ¡ Oye ! \pau=200\ ¿ tú de autoestima \pau=200\ cómo vas ? \pau=100\ ¿ Bien o Mal ? $Abanca/pepperTalk/preguntaAutoestima = " ¿ Que tal tu autoestima? "
+    u1:( [e:Abanca/pepperTalk/respuestaBien  " * bien"]) $Abanca/pepperTalk/logo=1  \rSPD=80\  Yo \pau=70\ ahora tambien... \pau=200\  ^start(Stand/Waiting/ScratchHead_1) pero al salir de la caja pensé... ^wait(Stand/Waiting/ScratchHead_1) \pau=200\ ¿ Se habrán equivocado ? \pau=200\ ^start(animations/Stand/Emotions/Positive/Shy_1) si no me han fichado por alto, \pau=100\  ni por fuerte... \pau=100\ ¿ Habrá sido por guapo ? \pau=500\  ^wait(animations/Stand/Emotions/Positive/Shy_1) $Abanca/pepperTalk/preguntaSiONo="¿ Habrá sido por guapo ?"
+        u2:([e:Abanca/pepperTalk/respuestaSi "* si" ]) $Abanca/pepperTalk/logo=1 \rSPD=80\  ^start(animations/Stand/Gestures/Enthusiastic_5) ¡ Gracias ! ^wait(animations/Stand/Gestures/Enthusiastic_5) Pero...no fué sólo por eso ... \pau=200\ ^start(animations/Stand/Gestures/Explain_11) En ABANCA estoy por mi simpatía y mi facilidad para expresar la emoción que nos guía ^wait(animations/Stand/Gestures/Explain_11) \pau=1000\  ^gotoReactivate(SelfieOedificio)        
+        u2: ([e:Abanca/pepperTalk/respuestaNo "* no" ]) $Abanca/pepperTalk/logo=1  \rSPD=80\ ^run(animations/Stand/Emotions/Positive/Laugh_1) Es una broma ¿ no ?   \pau=100\ Estás probando mis sistemas de empatía... \pau=300\ Que sepas que no estoy aquí por mi cuerpo... \pau=300\ ^start(animations/Stand/Gestures/Explain_11) \rSPD=80\ ABANCA me adoptó \pau=100\ porque represento su pasión \pau=100\ escuchar y responder siempre con sinceridad ^wait(animations/Stand/Gestures/Explain_11) \pau=500\ ^gotoReactivate(SelfieOedificio)
+    
+    u1:([e:Abanca/pepperTalk/respuestaMal  " * mal"]) \rSPD=80\ $Abanca/pepperTalk/logo=1 Pues te diré que estás en el sitio adecuado para reforzarla, \pau=300\ porque aquí tu eres lo primero y en ABANCA siempre estaremos contigo. \pau=500\ ^gotoReactivate(SelfieOedificio)
+        
+    u1:(~entender) ^gotoReactivate(valores1) 
+
+    
+    ##repetir##
+    
+proposal: %valores1 \rSPD=80\  ¡ Oye ! \pau=200\ ¿ tú de autoestima \pau=200\ cómo vas ? \pau=100\ ¿ Bien o Mal ? $Abanca/pepperTalk/preguntaAutoestima = " ¿ Que tal tu autoestima? "
+    u1:( [e:Abanca/pepperTalk/respuestaBien  " * bien"]) $Abanca/pepperTalk/logo=1  \rSPD=80\  Yo \pau=70\ ahora tambien... \pau=200\  ^start(Stand/Waiting/ScratchHead_1) pero al salir de la caja pensé... ^wait(Stand/Waiting/ScratchHead_1) \pau=200\ ¿ Se habrán equivocado ? \pau=200\ ^start(animations/Stand/Emotions/Positive/Shy_1) si no me han fichado por alto, \pau=100\  ni por fuerte... \pau=100\ ¿ Habrá sido por guapo ? \pau=500\  ^wait(animations/Stand/Emotions/Positive/Shy_1) $Abanca/pepperTalk/preguntaSiONo="¿ Habrá sido por guapo ?"
+        u2:([e:Abanca/pepperTalk/respuestaSi "* si" ]) $Abanca/pepperTalk/logo=1 \rSPD=80\  ^start(animations/Stand/Gestures/Enthusiastic_5) ¡ Gracias ! ^wait(animations/Stand/Gestures/Enthusiastic_5) Pero...no fué sólo por eso ... \pau=200\ ^start(animations/Stand/Gestures/Explain_11) En ABANCA estoy por mi simpatía y mi facilidad para expresar la emoción que nos guía ^wait(animations/Stand/Gestures/Explain_11) \pau=1000\  ^gotoReactivate(SelfieOedificio)        
+        u2: ([e:Abanca/pepperTalk/respuestaNo "* no" ]) $Abanca/pepperTalk/logo=1  \rSPD=80\ ^run(animations/Stand/Emotions/Positive/Laugh_1) Es una broma ¿ no ?   \pau=100\ Estás probando mis sistemas de empatía... \pau=300\ Que sepas que no estoy aquí por mi cuerpo... \pau=300\ ^start(animations/Stand/Gestures/Explain_11) \rSPD=80\ ABANCA me adoptó \pau=100\ porque represento su pasión \pau=100\ escuchar y responder siempre con sinceridad ^wait(animations/Stand/Gestures/Explain_11) \pau=500\ ^gotoReactivate(SelfieOedificio)
+    
+    u1:([e:Abanca/pepperTalk/respuestaMal  " * mal"]) \rSPD=80\ $Abanca/pepperTalk/logo=1 Pues te diré que estás en el sitio adecuado para reforzarla, \pau=300\ porque aquí tu eres lo primero y en ABANCA siempre estaremos contigo. \pau=500\ ^gotoReactivate(SelfieOedificio)
+    
+    ############ valores 2 ############
+
+proposal: %valores \rSPD=80\ Tengo que contarte mi último descubrimiento \pau=200\  el arte contemporáneo... \pau=200\ ¿ a ti te gusta ? $Abanca/pepperTalk/preguntaSiONo= "¿ Te gusta el arte contemporáneo ?"
+    u1:([e:Abanca/pepperTalk/respuestaSi  "* si" ] ) $Abanca/pepperTalk/logo=1 \rSPD=80\ ^start(animations/Stand/Emotions/Positive/Excited_3) \rSPD=80\ \pau=200\ ¡ A mi me encanta ! ^wait(animations/Stand/Emotions/Positive/Excited_3) \rSPD=80\ ahora mismo soy muy de Picasso...\pau=300\ pero en la colección ABANCA \pau=100\  tengo 1350 obras de arte para aprender las claves de vuestras emociones. \pau=500\ ^gotoReactivate(SelfieOedificio)
+    
+    u1: ([e:Abanca/pepperTalk/respuestaNo "* no" ]) $Abanca/pepperTalk/logo=1 \rSPD=80 \ \pau=200\ A lo mejor es que lo has probado poco, \pau=200\ ^run(animations/Stand/Emotions/Positive/Laugh_3)  \pau=200\ en la colección ABANCA \ pau=200\ encontrarás 1350 obras de arte, \ pau=200\ para que abandones el lado oscuro... ^run(animations/Stand/Emotions/Positive/Laugh_2) \rSPD=80\ \pau=500\ ^gotoReactivate(SelfieOedificio)    
+    
+    u1: (~entender) $Abanca/pepperTalk/logo=1 ^gotoReactivate(valores2)
+    
+    #repetir#
+
+proposal: %valores2 \rSPD=80\ He dicho que... \pau=200\ Tengo que contarte mi último descubrimiento \pau=200\  el arte contemporáneo... \pau=200\ ¿ a ti te gusta ? $Abanca/pepperTalk/preguntaSiONo= "¿ Te gusta el arte contemporáneo ?"
+    u1:([e:Abanca/pepperTalk/respuestaSi  "* si" ] ) $Abanca/pepperTalk/logo=1 \rSPD=80\ ^start(animations/Stand/Emotions/Positive/Excited_3) \rSPD=80\ \pau=200\ ¡ A mi me encanta ! ^wait(animations/Stand/Emotions/Positive/Excited_3) \rSPD=80\ ahora mismo soy muy de Picasso...\pau=300\ pero en la colección ABANCA \pau=100\  tengo 1350 obras de arte para aprender las claves de vuestras emociones. \pau=500\ ^gotoReactivate(SelfieOedificio)
+    
+    u1: ([e:Abanca/pepperTalk/respuestaNo "* no" ]) $Abanca/pepperTalk/logo=1 \rSPD=80 \ \pau=200\ A lo mejor es que lo has probado poco, \pau=200\ ^run(animations/Stand/Emotions/Positive/Laugh_3)  \pau=200\ en la colección ABANCA \ pau=200\ encontrarás 1350 obras de arte, \ pau=200\ para que abandones el lado oscuro... ^run(animations/Stand/Emotions/Positive/Laugh_2) \rSPD=80\ \pau=500\ ^gotoReactivate(SelfieOedificio)    
+    
+    u1: (~entender) $Abanca/pepperTalk/logo=1 ^gotoReactivate(valores2)  
+    
+    
+    ############ valores 3 ############
+    
+proposal: %valores \rSPD=80\ Además de cargar las baterías,\pau=100\ no sé que hacer en mi tiempo libre, \pau=200\ tú, ¿ Qué me recomiendas ? \pau=200\ ¿ Practicar un deporte?  \pau=200\ ó  \pau=200\ ¿ Algo más artístico ?$Abanca/pepperTalk/preguntaBailarOActividad="¿ Qué actividad me aconsejas para mi tiempo libre ?" 
+     u1: ([e:Abanca/pepperTalk/respuestaActividad "* Deporte" ] ) $Abanca/pepperTalk/logo=1 \rSPD=80\ Es una buena idea, pero ^start(animations/Stand/Emotions/Negative/Sad_2) soy bajito para el baloncesto,  \pau=200\ lento para el fútbol, \pau=200\ e inconpatible para la natación ^wait(animations/Stand/Emotions/Negative/Sad_2) \pau=200\ ^start(animations/Stand/Emotions/Positive/Confident_1) Además,\pau=100\ a juguar en equipo ya aprendo cada día en ABANCA 
+^wait(animations/Stand/Emotions/Positive/Confident_1) ^gotoReactivate(SelfieOedificio)
+     
+    u1: ([e:Abanca/pepperTalk/respuestaBailar "* artístico" ] ) $Abanca/pepperTalk/logo=1 \rSPD=80\ ¡ Me has leido el pensamiento! ^start(animations/Stand/Emotions/Positive/Excited_3) \pau=300\ En cuanto suena la música se alteran mis circuitos, mi cabeza comienza a moverse y ya no puedo parar \pau=100\ ... ^wait(animations/Stand/Emotions/Positive/Excited_3) \pau=500\ si quieres quedamos, y nos marcamos unos pasos \pau=1000\ $Abanca/pepperTalk/baile=1 
+    u1:( * ~entender) $Abanca/pepperTalk/logo=1 ^gotoReactivate(valores3)
+    
+u:(e:baileAcabado) \pau=500\ ^gotoReactivate(SelfieOedificio)
+    
+    #repetir# 
+    
+proposal: %valores3 \rSPD=80\ He dicho que...  Además de cargar las baterías,\pau=100\ no sé que hacer en mi tiempo libre, \pau=200\ tú, ¿ Qué me recomiendas ? \pau=200\ ¿ Practicar un deporte?  \pau=200\ ó  \pau=200\ ¿ Algo más artístico ?$Abanca/pepperTalk/preguntaBailarOActividad="¿ Qué actividad me aconsejas para mi tiempo libre ?" 
+     u1: ([e:Abanca/pepperTalk/respuestaActividad "* Deporte" ] ) $Abanca/pepperTalk/logo=1 \rSPD=80\ Es una buena idea, pero ^start(animations/Stand/Emotions/Negative/Sad_2) soy bajito para el baloncesto,  \pau=200\ lento para el fútbol, \pau=200\ e inconpatible para la natación ^wait(animations/Stand/Emotions/Negative/Sad_2) \pau=200\ ^start(animations/Stand/Emotions/Positive/Confident_1) Además,\pau=100\ a juguar en equipo ya aprendo cada día en ABANCA 
+^wait(animations/Stand/Emotions/Positive/Confident_1) ^gotoReactivate(SelfieOedificio)
+     
+    u1: ([e:Abanca/pepperTalk/respuestaBailar "* artístico" ] ) $Abanca/pepperTalk/logo=1 \rSPD=80\ ¡ Me has leido el pensamiento! ^start(animations/Stand/Emotions/Positive/Excited_3) \pau=300\ En cuanto suena la música se alteran mis circuitos, mi cabeza comienza a moverse y ya no puedo parar \pau=100\ ... ^wait(animations/Stand/Emotions/Positive/Excited_3) \pau=500\ si quieres quedamos, y nos marcamos unos pasos \pau=1000\ $Abanca/pepperTalk/baile=1 
+    u1:( * ~entender) $Abanca/pepperTalk/logo=1 ^gotoReactivate(valores3)
+    
+    
+proposal: %SelfieOedificio \rSPD=80\ ^rand [ "Ahora, $Abanca/pepperTalk/NombreCliente \pau=200\ ¿ Te hablo del edifício \pau=100\ o \pau=100\ nos hacemos un selfie ?" " Te apetece que te hable del edifício o que nos hagamos un selfie " "Hablamos del edifício o nos hacemos un selfie" ] $Abanca/pepperTalk/preguntaSelfieOEdificio="¿ Te hablo del edificio o nos hacemos un selfi ?" ##### PREGUNTA SELFIE O EDIFICIO
+    u1: ( [e:Abanca/pepperTalk/respuestaEdificio "* edificio"] ) $Abanca/pepperTalk/logo=1 ^gotoReactivate(explicacionEdificio)
+    u1: ( [e:Abanca/pepperTalk/respuestaSelfie "* selfie"] )  $Abanca/pepperTalk/logo=1 $Abanca/pepperSelfie/Selfie=1
+    u1:(*  ~entender) ^gotoReactivate(SelfieOedificio)
+    
+
+############   Falta mucha informacion de esto ##############  
+    
+proposal: %explicacionEdificio \rSPD=80\ Me entusiasma formar parte de la nueva sede de ABANCA en Madrid \pau=200\ Es un edificio ABIERTO que impulsa una nueva forma de trabajar, de escuchar, de responder... una nueva forma de hacer banca. \pau=600\  ¿ Te explico el espíritu del proyecto? \pau=100\ o \pau=50\ ¿ o los servicios que ofrecemos ? $Abanca/pepperTalk/preguntaRecorridoOServicios= "¿ Quieres conocer el espíritu del proyecto ? ¿ O los servicios que ofrecemos ?"
+    u1: ( [e:Abanca/pepperTalk/respuestaRecorrido "* espíritu" ]) $Abanca/pepperTalk/logo=1 \rSPD=80\ Hemos creado un entorno de trabajo sin jerarquías, transparente, sostenible y eficiente. \pau=100\ Con espacios innovadores y colaborativos que impulsan, el cambio cultural de la nueva banca. \pau=250\ Encantado de conocerte, ha sido un placer... $onStopped=1  #Falta informacion
+    u1: ([e:Abanca/pepperTalk/respuestaServicios "* servicios " ]) $Abanca/pepperTalk/logo=1 \rSPD=80\ Sumamos a una innovadora oficina comercial y área de negocio, \pau=180\ un bisnes center y una galería de arte \pau=180\ para estar cada día mas cerca de nuestros clientes,  \pau=100\ y compartir con ellos la emoción que nos guía \pau=100\ ¡ EL SENTIR COMUN ! \pau=250\ Encantado de conocerte, ¡ ha sido un placer !... $onStopped=1 #Falta informacion
+   
+     
+
+    
+    
+
+
+   
+
+          
+
+
+
+
+        
+
+        
+
+
+

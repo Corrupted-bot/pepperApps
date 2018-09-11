@@ -1,0 +1,999 @@
+﻿<!DOCTYPE html>
+<html lang="en" >
+<head>
+    <title>ABANCA</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=0.9, user-scalable=no">
+
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
+    <style type="text/css">
+        .bgfullscreen{
+            margin: 0;
+            padding: 0;
+            background: url("img/PANTALLA_R4.jpg");
+            background-size: 1920px 1200px;
+            background-repeat: no-repeat;
+        }
+
+        .bgpreloader{
+            margin: 0;
+            padding: 0;
+            background: url("img/espera.gif");
+            background-size: 1920px 1200px;
+            background-repeat: no-repeat;
+        }
+
+        .fondo_preguntas{
+            margin: 0;
+            padding: 0;
+            background: url("img/fondo_preguntas.jpg");
+            background-size: 1920px 1200px;
+            background-repeat: no-repeat;
+        }
+        h1{font-size: 85px; font-weight: bold; color: #888888; width: 100%; text-align: center; margin-bottom: 40px;padding-top: 260px}
+
+        .sin{font-size: 85px; font-weight: bold; color: #888888; width: 100%; text-align: center; margin-bottom: 40px;padding-top: 50px}
+
+        /*.container{padding-top: 260px}*/
+
+        #pepperSelfie{padding-top: -350px}
+
+        #foto{padding-bottom: 50px}
+
+
+
+        .bgPajaros{
+            margin: 0;
+            padding: 0;
+            background: url("img/pantallas/R4-PARIS-2.jpg");
+            background-size: 1920px 1200px;
+            background-repeat: no-repeat;
+        }   
+
+        .bgEscaleras{
+            margin: 0;
+            padding: 0;
+            background: url("img/pantallas/R4-gallego.jpg");
+            background-size: 1920px 1200px;
+            background-repeat: no-repeat;
+        }   
+
+        .bgHipster{
+            margin: 0;
+            padding: 0;
+            background: url("img/pantallas/R4-hipster-2.jpg");
+            background-size: 1920px 1200px;
+            background-repeat: no-repeat;
+        }         
+
+        .bgDeportivo{
+            margin: 0;
+            padding: 0;
+            background: url("img/pantallas/R4-deportivo-2.jpg");
+            background-size: 1920px 1200px;
+            background-repeat: no-repeat;
+        } 
+
+        .bgFormal{
+            margin: 0;
+            padding: 0;
+            background: url("img/pantallas/R4-lio.jpg");
+            background-size: 1920px 1200px;
+            background-repeat: no-repeat;
+        }      
+
+
+        .bgRobot{
+            margin: 0;
+            padding: 0;
+            background: url("img/pantallas/PANTALLA-robot.jpg");
+            background-size: 1920px 1200px;
+            background-repeat: no-repeat;  
+        }
+
+    </style>
+    
+    <script src="js/jquery.min.js"></script>
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/qimessaging.js"></script>
+    
+
+
+<script>
+    $(document).ready(function() {
+
+        //$("#quienEres").hide()
+
+        //ocultaCapas()
+
+        muestraLogo()
+       
+
+
+        $('#quienEres .dcha img').on('touchstart', function(event) {
+
+            session.service("ALMemory").then(function (ALMemory)
+            {
+                ALMemory.raiseEvent("soyEsaPersonaSI",1);
+            })
+        });
+
+        $('#quienEres .izda img').on('touchstart', function(event) {
+
+            session.service("ALMemory").then(function (ALMemory)
+            {
+                ALMemory.raiseEvent("soyEsaPersonaNO",1);
+            })
+
+        });
+
+
+
+        $('#quieresHablar .dcha img').on('touchstart', function(event) {
+
+            session.service("ALMemory").then(function (ALMemory)
+            {
+                ALMemory.raiseEvent("quieroHablarSI",1);
+            });
+            
+        });
+        $('#quieresHablar .izda img').on('touchstart', function(event) {
+            session.service("ALMemory").then(function (ALMemory)
+            {
+                ALMemory.raiseEvent("quieroHablarNO",1);
+            });
+        });
+
+
+/////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////
+        $('#dialogoAplazar .dcha img').on('touchstart', function(event) {
+
+            session.service("ALMemory").then(function (ALMemory)
+            {
+                ALMemory.raiseEvent("hablarPlazosSI",1);
+            });
+            
+        });
+        $('#dialogoAplazar .izda img').on('touchstart', function(event) {
+            session.service("ALMemory").then(function (ALMemory)
+            {
+                ALMemory.raiseEvent("hablarPlazosNO",1);
+            });
+        });
+
+/////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////
+
+
+/////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////
+        $('#placidoyserena .dcha img').on('touchstart', function(event) {
+           session.service("ALMemory").then(function (ALMemory)
+            {
+                ALMemory.raiseEvent("hablarPlacidoYserenaSI",1);
+            });
+            
+        });
+        $('#placidoyserena .izda img').on('touchstart', function(event) {
+           session.service("ALMemory").then(function (ALMemory)
+            {
+                ALMemory.raiseEvent("hablarPlacidoYserenaNO",1);
+            });
+        });
+
+/////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////
+
+/////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////
+        $('#cuentamePlazos .dcha img').on('touchstart', function(event) {
+            session.service("ALMemory").then(function (ALMemory)
+            {
+                ALMemory.raiseEvent("verVideoPlazosSI",1);
+            });
+            
+        });
+        $('#cuentamePlazos .izda img').on('touchstart', function(event) {
+            session.service("ALMemory").then(function (ALMemory)
+            {
+                ALMemory.raiseEvent("verVideoPlazosNO",1);
+            });
+        });
+
+/////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////
+
+
+        $('#videoPlacidoySerena .dcha img').on('touchstart', function(event) {
+            session.service("ALMemory").then(function (ALMemory)
+            {
+                ALMemory.raiseEvent("verVideoPlacidoySerenaSI",1);
+            });
+            
+        });
+        $('#videoPlacidoySerena .izda img').on('touchstart', function(event) {
+            session.service("ALMemory").then(function (ALMemory)
+            {
+                ALMemory.raiseEvent("verVideoPlacidoySerenaNO",1);
+            });
+        });
+
+//fuenteTranquilidad
+
+/////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////
+        function errorCamara(){
+
+            session.service("ALMemory").then(function (ALMemory)
+            {
+                ALMemory.raiseEvent("quieresImprimirNO",1);
+            });
+        }
+
+
+        $('#fuenteTranquilidad .dcha img').on('touchstart', function(event) {
+            session.service("ALMemory").then(function (ALMemory)
+            {
+                ALMemory.raiseEvent("verVideoTranquilidadSerenaSI",1);
+            });
+            
+        });
+        $('#fuenteTranquilidad .izda img').on('touchstart', function(event) {
+            session.service("ALMemory").then(function (ALMemory)
+            {
+                ALMemory.raiseEvent("verVideoTranquilidadSerenaNO",1);
+            });
+        });
+
+        function verFuenteTranquilidad(respuesta){
+            session.service("ALMemory").then(function (ALMemory)
+            {
+                ALMemory.raiseEvent("videoTranquilidad",respuesta);
+            });
+        }
+
+
+// robotDance
+/////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////
+        $('#robotDance .dcha img').on('touchstart', function(event) {
+            session.service("ALMemory").then(function (ALMemory)
+            {
+                ALMemory.raiseEvent("vaileRobotSI",1);
+            });
+            
+        });
+        $('#robotDance .izda img').on('touchstart', function(event) {
+            session.service("ALMemory").then(function (ALMemory)
+            {
+                ALMemory.raiseEvent("vaileRobotNO",1);
+            });
+        });
+
+// robot selfie
+/////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////
+        $('#quieresUnSelfie .dcha img').on('touchstart', function(event) {
+            session.service("ALMemory").then(function (ALMemory)
+            {
+                ALMemory.raiseEvent("quieresUnSelfieSI",1);
+            });
+            
+        });
+        $('#quieresUnSelfie .izda img').on('touchstart', function(event) {
+            session.service("ALMemory").then(function (ALMemory)
+            {
+                ALMemory.raiseEvent("quieresUnSelfieNO",1);
+            });
+        });
+
+
+        $('#pepperSelfie .dcha img').on('touchstart', function(event) {
+            session.service("ALMemory").then(function (ALMemory)
+            {
+                ALMemory.raiseEvent("quieresImprimirSI",1);
+            });
+            
+        });
+        $('#pepperSelfie .izda img').on('touchstart', function(event) {
+            session.service("ALMemory").then(function (ALMemory)
+            {
+                ALMemory.raiseEvent("quieresImprimirNO",1);
+            });
+        });
+
+// conversacionPreguntaSiONo
+/////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////
+        $('#conversacionSINO .dcha img').on('touchstart', function(event) {
+            session.service("ALMemory").then(function (ALMemory)
+            {
+                ALMemory.raiseEvent("conversacionRespuestaSi",1);
+            });
+            
+        });
+        $('#conversacionSINO .izda img').on('touchstart', function(event) {
+            session.service("ALMemory").then(function (ALMemory)
+            {
+                ALMemory.raiseEvent("conversacionRespuestaNo",1);
+            });
+        });
+
+/////
+        $('#conversacionEstilos .izda img').on('touchstart', function(event) {
+            session.service("ALMemory").then(function (ALMemory)
+            {
+                ALMemory.raiseEvent("respuestaElegante",1);
+            });
+            
+        });
+        $('#conversacionEstilos .medio img').on('touchstart', function(event) {
+            session.service("ALMemory").then(function (ALMemory)
+            {
+                ALMemory.raiseEvent("respuestaCasual",1);
+            });
+        });
+        $('#conversacionEstilos .dcha img').on('touchstart', function(event) {
+            session.service("ALMemory").then(function (ALMemory)
+            {
+                ALMemory.raiseEvent("respuestaDeportivo",1);
+            });
+        });
+
+
+        $('#deporteOartistico .dcha img').on('touchstart', function(event) {
+            session.service("ALMemory").then(function (ALMemory)
+            {
+                ALMemory.raiseEvent("conversacionArtistico",1);
+            });
+            
+        });
+        $('#deporteOartistico .izda img').on('touchstart', function(event) {
+            session.service("ALMemory").then(function (ALMemory)
+            {
+                ALMemory.raiseEvent("conversacionDeporte",1);
+            });
+        });
+
+
+        $('#hablarOselfie .dcha img').on('touchstart', function(event) {
+            session.service("ALMemory").then(function (ALMemory)
+            {
+                ALMemory.raiseEvent("pepperVaila",1);
+                ALMemory.raiseEvent("finIdentificacion",1);
+            });
+            
+        });
+        $('#hablarOselfie .izda img').on('touchstart', function(event) {
+            session.service("ALMemory").then(function (ALMemory)
+            {
+                ALMemory.raiseEvent("conversacionCharlarSI",1);
+            });
+        });
+
+        $('#ponerCamaraLista .dcha img').on('touchstart', function(event) {
+            session.service("ALMemory").then(function (ALMemory)
+            {
+                ALMemory.raiseEvent("camaraEnPosicionFoto",1);
+            });
+        });
+
+
+
+
+        session = new QiSession(function (session) 
+        {
+           // $('.izda .caption').text("connected")
+        }, function () {
+           // $('.izda .caption').text("disssssconnected")
+        });
+
+
+
+        function responde(msg){
+            session.service("ALMemory").then(function (ALMemory)
+            {
+                ALMemory.raiseEvent("tabletTouch",msg);
+            });
+        }
+
+
+        session.service("ALMemory").then(function (ALMemory)
+        {
+            // pone el nombre del user en pantalla quienEres
+            ALMemory.subscriber("nombreTablet").then(function (subscriber)
+            {
+                subscriber.signal.connect(function (_nome)
+                {
+                    $('.nombre').text("Hola, ¿ eres " +_nome + " ?");
+                });
+            });
+
+
+            // muestra el dialogo de los plazos
+            ALMemory.subscriber("muestraDialogoPlazos").then(function (subscriber)
+            {
+                subscriber.signal.connect(function (_nome)
+                {
+                    ocultaLogo()
+                    $("#dialogoAplazar").show()
+                });
+            });
+
+
+            //comienzaApp
+
+
+            ALMemory.subscriber("dialogoPlacido").then(function (subscriber)
+            {
+                subscriber.signal.connect(function (_nome)
+                {
+                    ocultaLogo()
+                    $("#placidoyserena").show()
+                });
+            });
+            ALMemory.subscriber("videoPlazos").then(function (subscriber)
+            {
+                subscriber.signal.connect(function (_nome)
+                {
+                    ocultaLogo()
+                    $("#cuentamePlazos").show()
+                });
+            });
+
+            ALMemory.subscriber("muestraVideoPlacido").then(function (subscriber)
+            {
+                subscriber.signal.connect(function (_nome)
+                {
+                    ocultaLogo()
+                    $("#videoPlacidoySerena").show()
+                });
+            });
+
+
+
+//placidoyserena
+
+            // muestra pantalla ¿eres fulanito?
+            ALMemory.subscriber("identificate").then(function (subscriber)
+            {
+               subscriber.signal.connect(function (_nome)
+                {
+                    ocultaLogo()
+                    $("#quienEres").show()
+                });
+            });
+
+            ALMemory.subscriber("quieresHablar").then(function (subscriber)
+            {
+               subscriber.signal.connect(function (_nome)
+                {
+                    ocultaLogo()
+                    $("#quieresHablar").show()
+                });
+            });
+
+
+            ALMemory.subscriber("finIdentificacion").then(function (subscriber)
+            {
+               subscriber.signal.connect(function (_nome)
+                {
+                    
+                    muestraLogo()
+                });
+            });
+
+            ALMemory.subscriber("videoFuenteTranquilidad").then(function (subscriber)
+            {
+               subscriber.signal.connect(function (_nome)
+                {
+                    ocultaLogo()
+                    $("#fuenteTranquilidad").show()
+                });
+            });
+
+            ALMemory.subscriber("verVailarAlRobot").then(function (subscriber)
+            {
+               subscriber.signal.connect(function (_nome)
+                {
+                    ocultaLogo()
+                    $("#robotDance").show()
+                });
+            });
+
+/////////////////////////////// memory selfie /////////////////////////////////
+            ALMemory.subscriber("sacarSelfie").then(function (subscriber)
+            {
+               subscriber.signal.connect(function (_nome)
+                {
+                    ocultaLogo()
+                    sacaFoto()
+                    $("#pepperSelfie h1").removeClass("sin")
+                    $('#foto').html('')
+                    $('#botonesGusta').hide()
+                    $("#pepperSelfie").show()
+                });
+            });     
+
+            ALMemory.subscriber("conversacionPreguntaSiONo").then(function (subscriber)
+            {
+               subscriber.signal.connect(function (_pregunta)
+                {
+                    ocultaLogo()
+                    $("#conversacionSINO").show()
+                    $("#conversacionSINO h1").text(_pregunta)
+                });
+            });
+
+            ALMemory.subscriber("nosSacamosUnSelfie").then(function (subscriber)
+            {
+               subscriber.signal.connect(function (_nome)
+                {
+                    ocultaLogo()
+                    $("#quieresUnSelfie").show()
+                });
+            });
+
+//////////////////////// dialogos
+            ALMemory.subscriber("conversacionVengoDeParis").then(function (subscriber)
+            {
+               subscriber.signal.connect(function (_nome)
+                {
+                    //ocultaLogo()
+                    pajaros()
+                });
+            });
+
+            ALMemory.subscriber("conversacionGallego").then(function (subscriber)
+            {
+               subscriber.signal.connect(function (_nome)
+                {
+                    //ocultaLogo()
+                    escaleras()
+                });
+            });
+
+            ALMemory.subscriber("conversacionQueEstiloTeGustaMas").then(function (subscriber)
+            {
+               subscriber.signal.connect(function (_nome)
+                {
+                     ocultaLogo()
+                    $("#conversacionEstilos").show()
+                });
+            });
+
+            ALMemory.subscriber("conversacionQueEstiloTeGustaMasFormal").then(function (subscriber)
+            {
+               subscriber.signal.connect(function (_nome)
+                {
+                     formal()
+                });
+            });
+            ALMemory.subscriber("conversacionQueEstiloTeGustaMasCasual").then(function (subscriber)
+            {
+               subscriber.signal.connect(function (_nome)
+                {
+                     hipster()
+                });
+            });
+
+            ALMemory.subscriber("conversacionQueEstiloTeGustaMasDeportivo").then(function (subscriber)
+            {
+               subscriber.signal.connect(function (_nome)
+                {
+                     desportivo()
+                });
+            });
+
+
+
+            ALMemory.subscriber("conversacionHablarConUnRobot").then(function (subscriber)
+            {
+               subscriber.signal.connect(function (_nome)
+                {
+                     hablarConUnRobot()
+                });
+            });
+
+            ALMemory.subscriber("conversacionDeporteOartistico").then(function (subscriber)
+            {
+               subscriber.signal.connect(function (_pregunta)
+                {
+                    ocultaLogo()
+                    $("#deporteOartistico").show()
+                });
+            });
+
+
+
+            ALMemory.subscriber("imprimeElSelfie").then(function (subscriber)
+            {
+               subscriber.signal.connect(function (_nome)
+                {
+                    muestraLogo()
+                    imprimeFoto()
+                });
+            });
+
+
+            ALMemory.subscriber("charlarOselfie").then(function (subscriber)
+            {
+               subscriber.signal.connect(function (_nome)
+                {
+                     ocultaLogo()
+                    $("#hablarOselfie").show()
+                });
+            });
+
+
+            ALMemory.subscriber("ponerCamara").then(function (subscriber)
+            {
+               subscriber.signal.connect(function (_nome)
+                {
+                     ocultaLogo()
+                    $("#ponerCamaraLista").show()
+                });
+            });
+
+
+
+
+
+        });
+
+        function verElSelfie(){
+            session.service("ALMemory").then(function (ALMemory){
+                ALMemory.raiseEvent("verSelfie",1);
+            });
+        }
+
+///////////////////////////////////////////////////////////////////////
+        function imprimeFoto(){
+            var url = $("#foto img").attr("src");
+            var index = url.lastIndexOf("/")+1;
+            var nombreFoto = url.substr(index)
+
+            $.get("http://192.168.0.7/imprimeSelfie",{url:nombreFoto})
+
+        }
+
+        function sacaFoto(){
+            var serverFoto = "http://192.168.0.7/pepperSelfie"
+
+            $.getJSON(serverFoto).done(function(data){
+                //console.log(data)
+               
+
+                if (data['url_photo'].indexOf(".JPG") != -1) {
+                    var img = $('<img id="dynamic" width="720" height="540">');
+                    var cadena = "http://192.168.0.7/static/"+data['url_photo']
+                    img.attr('src',cadena)
+                    img.appendTo('#foto')
+
+                    $("#pepperSelfie h1").addClass("sin")
+
+                     $('#pepperSelfie h1').text("¿ Quieres imprimirla ?")
+
+                     $('#botonesGusta').show()
+                    
+                    $("#pepperSelfie h1").addClass("sin")
+
+                    verElSelfie();
+                     
+                }else{
+                    $('#pepperSelfie h1').text(data['url_photo'])
+                    errorCamara()
+                }
+                
+            }).fail(function(data){
+                $('#pepperSelfie h1').text(data)
+
+                errorCamara()
+            })
+
+        }
+
+
+        function muestraPreloader(){
+            ocultaCapas()
+            $("div.container").removeClass("fondo_preguntas")
+            $("body").addClass("bgpreloader")
+        }
+
+        function ocultaPreloader(){
+            $("body").removeClass("bgpreloader")
+        }
+
+
+        function ocultaCapas(){
+            $("div.row:visible").hide()
+        }
+
+
+       function muestraLogo(){
+            ocultaCapas()
+            //$("body").removeClass("fondo_preguntas")
+            $("body").removeClass()
+            $("body").addClass("bgfullscreen")
+       }
+
+        function ocultaLogo(){
+            ocultaCapas()
+            //$("body").removeClass("bgfullscreen")
+            $("body").removeClass()
+            $("body").addClass("fondo_preguntas")
+       }
+
+//////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////
+       function pajaros(){
+            ocultaCapas()
+            $("body").removeClass()
+            $("body").addClass("bgPajaros")
+       }
+
+       function escaleras(){
+            ocultaCapas()
+            $("body").removeClass()
+            $("body").addClass("bgEscaleras")
+       }
+
+        function formal(){
+            ocultaCapas()
+            $("body").removeClass()
+            $("body").addClass("bgFormal")
+       }
+
+        function hipster(){
+            ocultaCapas()
+            $("body").removeClass()
+            $("body").addClass("bgHipster")
+       }
+
+        function desportivo(){
+            ocultaCapas()
+            $("body").removeClass()
+            $("body").addClass("bgDeportivo")
+       }
+
+
+
+       function hablarConUnRobot(){
+            ocultaCapas()
+            $("body").removeClass()
+            $("body").addClass("bgRobot")
+       }
+    })
+
+
+
+</script>
+</head>
+
+<body>
+    <div class="container " >
+
+        <!-- identificacion -->
+        <div class="row" id="quienEres">
+            <h1 class="nombre">nombre del usuario</h1>
+
+            <div class="col-md-6 izda" style="text-align: right; vertical-align: right">
+                <img src="img/respuesta_no.gif" alt="no"   style="width:100%;">
+            </div>
+
+            <div class="col-md-6 dcha" >
+                <img src="img/respuesta_si.gif" alt="si"  style="width:100%">
+            </div>
+
+        </div>
+
+        <!-- quieres hablar -->
+        <div class="row" id="quieresHablar">
+            <h1>¿ quieres hablar un poco ?</h1>
+
+            <div class="col-md-6 izda" style="text-align: right; vertical-align: right">
+                <img src="img/respuesta_no.gif" alt="no"   style="width:100%;">
+            </div>
+
+            <div class="col-md-6 dcha" >
+                <img src="img/respuesta_si.gif" alt="si"  style="width:100%">
+            </div>
+
+        </div>
+
+
+
+
+        <div class="row" id="dialogoAplazar">
+            <h1>¿ que me dices ?</h1>
+
+            <div class="col-md-6 izda" style="text-align: right; vertical-align: right">
+                <img src="img/respuesta_no.gif" alt="no"   style="width:100%;">
+            </div>
+
+            <div class="col-md-6 dcha" >
+                <img src="img/respuesta_si.gif" alt="si"  style="width:100%">
+            </div>
+
+        </div>
+
+
+        <div class="row" id="placidoyserena">
+            <h1>¿ conoces a plácido y serena ?</h1>
+
+            <div class="col-md-6 izda" style="text-align: right; vertical-align: right">
+                <img src="img/respuesta_no.gif" alt="no"   style="width:100%;">
+            </div>
+
+            <div class="col-md-6 dcha" >
+                <img src="img/respuesta_si.gif" alt="si"  style="width:100%">
+            </div>
+
+        </div>
+
+        <div class="row" id="cuentamePlazos">
+            <h1>¿ te lo cuento ?</h1>
+
+            <div class="col-md-6 izda" style="text-align: right; vertical-align: right">
+                <img src="img/respuesta_no.gif" alt="no"   style="width:100%;">
+            </div>
+
+            <div class="col-md-6 dcha" >
+                <img src="img/respuesta_si.gif" alt="si"  style="width:100%">
+            </div>
+
+        </div>
+
+
+        <div class="row" id="videoPlacidoySerena">
+            <h1>¿ quieres saber cómo ?</h1>
+
+            <div class="col-md-6 izda" style="text-align: right; vertical-align: right">
+                <img src="img/respuesta_no.gif" alt="no"   style="width:100%;">
+            </div>
+
+            <div class="col-md-6 dcha" >
+                <img src="img/respuesta_si.gif" alt="si"  style="width:100%">
+            </div>
+
+        </div>
+
+
+        <div class="row" id="fuenteTranquilidad">
+            <h1>¿ quieres conocer la fuente de su tranquilidad ?</h1>
+
+            <div class="col-md-6 izda" style="text-align: right; vertical-align: right">
+                <img src="img/respuesta_no.gif" alt="no"   style="width:100%;">
+            </div>
+
+            <div class="col-md-6 dcha" >
+                <img src="img/respuesta_si.gif" alt="si"  style="width:100%">
+            </div>
+
+        </div>
+
+        <div class="row" id="robotDance">
+            <h1>¿ que te parece si bailamos un poco ?</h1>
+
+            <div class="col-md-6 izda" style="text-align: right; vertical-align: right">
+                <img src="img/respuesta_no.gif" alt="no"   style="width:100%;">
+            </div>
+
+            <div class="col-md-6 dcha" >
+                <img src="img/respuesta_si.gif" alt="si"  style="width:100%">
+            </div>
+
+        </div>
+
+
+
+        <!-- selfie -->
+        <div class="row" id="quieresUnSelfie">
+            <h1>¿ nos sacamos un selfie ?</h1>
+
+            <div class="col-md-6 izda" style="text-align: right; vertical-align: right">
+                <img src="img/respuesta_no.gif" alt="no"   style="width:100%;">
+            </div>
+
+            <div class="col-md-6 dcha" >
+                <img src="img/respuesta_si.gif" alt="si"  style="width:100%">
+            </div>
+
+        </div>
+
+
+        <div class="row" id="pepperSelfie">
+            <h1>sacando foto ....</h1>
+            <div class="col-md-12" id="foto" style="text-align:center"></div>
+
+            <div id="botonesGusta">
+                <div class="col-md-6 izda" style="text-align: right; vertical-align: right">
+                    <img src="img/respuesta_no.gif" alt="no"   style="width:100%;">
+                </div>
+
+                <div class="col-md-6 dcha" >
+                    <img src="img/respuesta_si.gif" alt="si"  style="width:100%">
+                </div>
+            </div>
+        </div>
+
+
+
+
+        <div class="row" id="conversacionSINO">
+            <h1>¿ la pregunta ?</h1>
+
+            <div class="col-md-6 izda" style="text-align: right; vertical-align: right">
+                <img src="img/respuesta_no.gif" alt="no"   style="width:100%;">
+            </div>
+
+            <div class="col-md-6 dcha" >
+                <img src="img/respuesta_si.gif" alt="si"  style="width:100%">
+            </div>
+
+        </div>
+
+
+
+
+        <div class="row" id="conversacionEstilos">
+            <h1>¿ Qué estilo te gusta más?</br>¿ Elegante Casual o Deportivo?</h1>
+
+            <div class="col-md-4 izda" style="text-align: right; vertical-align: right">
+                <img src="img/respuesta_formal.gif" alt="no"   style="width:100%;">
+            </div>
+
+            <div class="col-md-4 medio" >
+                <img src="img/respuesta_casual.gif" alt="si"  style="width:100%">
+            </div>
+
+            <div class="col-md-4 dcha" >
+                <img src="img/respuesta_deportivo.gif" alt="si"  style="width:100%">
+            </div>
+        </div>
+
+
+        <div class="row" id="deporteOartistico">
+            <h1>¿ Qué me recomiendas ?</h1>
+
+            <div class="col-md-6 izda" style="text-align: right; vertical-align: right">
+                <img src="img/respuesta_deporte.gif" alt="no"   style="width:100%;">
+            </div>
+
+            <div class="col-md-6 dcha" >
+                <img src="img/respuesta_artistico.gif" alt="si"  style="width:100%">
+            </div>
+
+        </div>
+
+        <div class="row" id="hablarOselfie">
+            <h1>¿ hablamos un poco, o bailamos ?</h1>
+
+            <div class="col-md-6 izda" style="text-align: right; vertical-align: right">
+                <img src="img/respuesta_hablar.gif" alt="no"   style="width:100%;">
+            </div>
+
+            <div class="col-md-6 dcha" >
+                <img src="img/respuesta_bailar.gif" alt="si"  style="width:100%">
+            </div>
+        </div>
+
+
+        <div class="row" id="ponerCamaraLista">
+            <h1>¿ estais listos ?</h1>
+            <div class="col-md-4 izda" > </div>
+            <div class="col-md-4 dcha" >
+                <img src="img/respuesta_listos.gif" alt="si"  style="width:100%">
+            </div>
+            <div class="col-md-4 izda" > </div>
+        </div>       
+
+
+    </div>
+</body>

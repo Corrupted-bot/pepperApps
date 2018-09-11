@@ -1,0 +1,45 @@
+topic: ~selfie_dialog()
+language: spe
+
+include:../concepts/different_concept_spe.top 
+
+u:(e:StopDialog) $onStopped=1
+u:(e:onStart) \rSPD=80\ ^gotoRandom(TagFoto)
+
+proposal: %TagFoto  Me ha encantado conocerte $Abanca/pepperTalk/NombreCliente \pau=400\ mis sistemas me dicen que nuestra compatibilidad supera el 90 por ciento ^run(animations/Stand/Emotions/Positive/Happy_3) \pau=100\ me gustaría mucho inmortalizar el momento \pau=200\  ^gotoReactivate(foto)
+
+proposal: %TagFoto ¡ Oye ! \pau=200\ ha sido fantástico conocerte $Abanca/pepperTalk/NombreCliente ^run(animations/Stand/Emotions/Positive/Happy_3)  \pau=200\ ^gotoReactivate(foto)
+
+proposal: %TagFoto ¡Soy un experto haciendo fotos! \pau=400\ ^gotoReactivate(foto)
+
+    
+
+proposal:%foto \rSPD=80\  Si me ayudáis a poner la cámara nos hacemos el selfi ¿ Quieres ? $Abanca/pepperTalk/preguntaSiONo="¿ Quieres que nos hagamos un selfie? " ^gotoReactivate(prepararnos)
+
+
+
+proposal: %prepararnos
+    u1:([e:Abanca/pepperTalk/respuestaSi  " * ~afirmaciones"]) $Abanca/pepperTalk/logo=1 \rSPD=80\ Estupendo, deja que me prepare \pau=400\ y preparate $Abanca/pepperSelfie/conectarCamara=1
+    u1:([e:Abanca/pepperTalk/respuestaNo  " *no "]) $Abanca/pepperTalk/logo=1 \rSPD=80\ Tal vez en otro momento \pau=300\ ¡ Muchas gracias por tu tiempo ! ! Ha sido un placer ¡ $onStopped=1 $Abanca/pepperSelfie/Adios=1
+    
+u:(e:cam_not_connected) No puedo conectar con la cámara \pau=200\ ¿Lo intentamos de Nuevo? $Abanca/pepperTalk/preguntaSiONo="¿ Lo intentamos de nuevo? " ^gotoReactivate(prepararnos)
+u:(e:cam_connected) ^gotoReactivate(hacerfoto)
+
+
+proposal: %hacerfoto
+    u1: ( ~afirmaciones ) $Abanca/pepperSelfie/hacerFoto=1 
+    u1: (* no ) $Abanca/pepperSelfie/esperar=1
+        u2: ( * ya )  $Abanca/pepperSelfie/hacerFoto=1
+           
+u:(e:Abanca/pepperSelfie/fotoHecha) \rSPD=80\ $normalPositon=1 Ha salido genial, \pau=100\ Ven a ver como hemos salido. \pau=400\ ¿ Te gusta ?  ^gotoReactivate(continua)
+u:(e:Abanca/pepperSelfie/fotoNoHecha) \rSPD=80\ $normalPositon=1 Vaya, parece que no he podido sacar la foto. \pau=200\ ¿Lo intentamos de Nuevo? $Abanca/pepperTalk/preguntaSiONo="¿ Lo intentamos de nuevo? " ^gotoReactivate(prepararnos)
+
+proposal: %continua    
+    u1: ( {*} ~afirmaciones ) \rSPD=80\ Genial, \pau=200\ Puedo imprimirla  \pau=200\ ¿ Quieres... ? $Abanca/pepperTalk/preguntaSiONo="¿ Quieres que imprima la foto?"
+        u2: ( [e:Abanca/pepperTalk/respuestaSi  " * ~afirmaciones"] ) $Abanca/pepperTalk/logo=1 \rSPD=80\  ¡ Gracias! \pau=100\ Puedes recoger nuestra polaroid de recuerdo \pau=400\ ¡ Nos vemos ! $Abanca/pepperSelfie/publicarFoto=1 
+        u2: ( [e:Abanca/pepperTalk/respuestaNo  " * no"]) $Abanca/pepperTalk/logo=1 \rSPD=80\ Tal vez en otro momento \pau=300\ ¡ Muchas gracias por tu tiempo ! ! Ha sido un placer ¡ $onStopped=1 $Abanca/pepperSelfie/Adios=1
+    u1: ( {*} no ) \rSPD=80\ ¿ Quieres que la repitamos ?  \pau=200\ Esta vez saldrá perfecta $Abanca/pepperTalk/preguntaSiONo="¿ Quieres que la repitamos?" ^gotoReactivate(prepararnos)
+        
+
+        
+

@@ -1,0 +1,28 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<package version="0.0.2" uuid="nocheinformatica-1f6ebf">
+  <names>
+    <name lang="es_ES">nocheInformaticos</name>
+    <name lang="es_ES-x-scrald">nocheInformaticos</name>
+  </names>
+  <descriptions>
+    <description lang="es_ES">app para la gala de informaticos</description>
+    <description lang="es_ES-x-scrald">app para la gala de informaticos</description>
+  </descriptions>
+  <supportedLanguages>
+    <language>es_ES</language>
+  </supportedLanguages>
+  <descriptionLanguages>
+    <language>es_ES</language>
+  </descriptionLanguages>
+  <contents>
+    <behaviorContent path="behavior_1">
+      <userRequestable/>
+      <nature>interactive</nature>
+      <permissions/>
+    </behaviorContent>
+  </contents>
+  <requirements>
+    <naoqiRequirement maxVersion="2.5" minVersion="2.4"/>
+    <robotRequirement model="JULIETTE"/>
+  </requirements>
+</package>

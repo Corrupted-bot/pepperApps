@@ -1,0 +1,41 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<package version="0.0.0" uuid="dialogtest-5ecb8f">
+  <names>
+    <name lang="en_US">dialog test</name>
+    <name lang="en_US-x-scrald">dialog test</name>
+    <name lang="es_ES">prueba</name>
+    <name lang="es_ES-x-scrald">prueba</name>
+  </names>
+  <descriptions>
+    <description lang="es_ES">prueba</description>
+    <description lang="es_ES-x-scrald">prueba</description>
+  </descriptions>
+  <supportedLanguages>
+    <language>es_ES</language>
+  </supportedLanguages>
+  <descriptionLanguages>
+    <language>es_ES</language>
+  </descriptionLanguages>
+  <contents>
+    <behaviorContent path="behavior_1">
+      <userRequestable/>
+      <nature>interactive</nature>
+      <triggerSentences>
+        <sentence lang="es_ES">habla</sentence>
+        <sentence lang="es_ES">ya</sentence>
+        <sentence lang="es_ES-x-scrald">habla</sentence>
+        <sentence lang="es_ES-x-scrald">ya</sentence>
+      </triggerSentences>
+      <loadingResponses>
+        <sentence lang="es_ES">ahora</sentence>
+        <sentence lang="es_ES-x-scrald">ahora</sentence>
+      </loadingResponses>
+      <autonomous/>
+      <permissions/>
+    </behaviorContent>
+  </contents>
+  <requirements>
+    <naoqiRequirement maxVersion="2.4" minVersion="2.4"/>
+    <robotRequirement model="JULIETTE"/>
+  </requirements>
+</package>

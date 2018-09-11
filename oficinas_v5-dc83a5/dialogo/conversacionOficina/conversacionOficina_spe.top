@@ -1,0 +1,50 @@
+topic: ~conversacionOficina()
+language: spe
+
+
+concept: (afirmar)[
+Si
+vale
+ok
+]
+
+concept: (negar)[
+No
+Non
+]
+
+
+
+u:(e:onStart) ^startTag(hello) \rspd=90\ ¡Hola! \pau=500\ $identificate=1 ¿Eres $nombreUser ?
+    u1: ([e:soyEsaPersonaSI "~afirmar"]) \rspd=90\ $finIdentificacion = 1 ^waitTag(affirmative) [" $nombreGestor==no te estaba esperando \pau=500\ veo que tienes el numero $ticket , mientras esperas podemos hablar un poco \pau=500\ ¿ te apetece ?" "$nombreGestor<>no te estaba esperando \pau=500\ veo que tienes el $ticket , te va a atender $nombreGestor \pau=500\ pero ahora está ocupado, mientras esperas podemos hablar un poco \pau=500\ ¿ te apetece ?"] $quieresHablar=1
+        u2: ([e:quieroHablarSI "~afirmar"]) $finIdentificacion=1  ¡Genial! \pau=300\ ^gotoRandom(opciones)            
+        u2: ([e:quieroHablarNO "~negar"]) \rspd=90\ $finIdentificacion = 1 ¡ Que tengas un buen día! $onStopped=1        
+    u1: ([e:soyEsaPersonaNO "~negar"]) \rspd=90\ $finIdentificacion = 1 ^startTag(embarrassed) ¡Ah! Perdona estaba esperando a $nombreUser , si te identificas en el gestor de colas podemos hablar $onStopped=1
+    
+
+proposal: %opciones \rspd=90\ $nombreUser , aqui donde me ves ... puedo mandar tus gastos al lugar remoto que prefieras en un momento \pau=500\ ¿que me dices? $muestraDialogoPlazos=1
+    u1:([e:hablarPlazosSI "~afirmar"]) $finIdentificacion = 1 ^gotoReactivate(servicioAplazarPagos)
+    u1:([e:hablarPlazosNO "~negar"]) $finIdentificacion = 1 \rspd=90\ Veo que no tienes problemas de liquidez ... pues si estás buscando nuevos amigos \pau=500\ que sepas que estoy disponible  ^run(animations/Stand/Emotions/Positive/Laugh_3) ¡ encantado de conocerte ! $onStopped=1
+            
+proposal: %opciones  \rspd=90\ $nombreUser , ¿conoces a plácido y serena? ¿los de la bici que salen en la tele? $dialogoPlacido=1
+    u1:([e:hablarPlacidoYserenaSI "~afirmar"]) $finIdentificacion=1 ^gotoReactivate(segurosPlacidoySerena)
+    u1:([e:hablarPlacidoYserenaNO "~negar"]) $finIdentificacion=1 ^gotoReactivate(segurosPlacidoySerenaChapa)
+
+proposal: %servicioAplazarPagos \rspd=90\  ¡Está chupao! \pau=500\ ¡ Con nuestro servicio APLÁZAME, desde tu móvil con un click\pau=500\ ¿ te lo cuento ? $videoPlazos=1
+    u1:([e:verVideoPlazosSI "~afirmar"]) $finIdentificacion = 1 \rspd=90\  ¡Genial!, tengo un video muy chulo que lo explica $playVideoAplazar=1
+    u1:([e:verVideoPlazosNO "~negar"]) $finIdentificacion = 1 \rspd=90\  ¡Tienes razón! \pau=500\ te lo va a explicar mucho mejor uno de nuestros expertos...coméntaselo por favor . ¡ Gracias ! $onStopped=1
+
+
+proposal: %segurosPlacidoySerenaChapa \rspd=90\  ¡ No te preocupes ! \pau=500\ Para eso estoy yo aqui \pau=500\ ¿quieres conocer la fuente de su tranquilidad? $videoFuenteTranquilidad=1
+    u1:([e:verVideoTranquilidadSerenaSI "~afirmar"]) $finIdentificacion = 1 \rspd=90\  ¡Te he preparado un video para que lo veas ! $playVideoSeguros=1
+    u1:([e:verVideoTranquilidadSerenaNO "~negar"]) $finIdentificacion = 1 \rspd=90\  ¡CLARO! \pau=500\ a ti lo que interesa es TU FELICIDAD, no la de estos dos \pau=500\ Pues coméntalo cuando te atiendan \pau=500\ porque tenemos varios planes que pueden ayudarte. \pau=500\ ¡ Encantado de conocerte ! $onStopped=1
+
+proposal: %segurosPlacidoySerena \rspd=90\ ¡Pues todo lo que saben de seguros se lo expliqué yo! ^run(animations/Stand/Emotions/Positive/Laugh_3) \pau=200\ claro que a mi \pau=200\ me lo explicó Juan, el experto que ABANCA que es capaz de ahorrarte un 7 porciento en un pis pas ... ¿ quieres saber cómo ? $muestraVideoPlacido=1
+    u1:([e:verVideoPlacidoySerenaSI "~afirmar"]) $finIdentificacion = 1 \rspd=90\ ¡Te he preparado un video para que lo veas! $playVideoSeguros=1
+    u1:([e:verVideoPlacidoySerenaNO "~negar"]) $finIdentificacion = 1 \rspd=90\ ¡Tienes razón! \pau=500\ te lo va a explicar mucho mejor uno de nuestros expertos \pau=500\ coméntaselo por favor . ¡Gracias! $onStopped=1
+    
+    
+    
+u:(e:vailamos) Bueno, y ahora, ¿que te parece si vailamos un poco? $verVailarAlRobot=1
+    u1:([e:vaileRobotSI "~afirmar"]) $finIdentificacion = 1 Perfecto, que corra el aire. $vaila=1
+    u1:([e:vaileRobotNO "~negar"]) $finIdentificacion = 1 \pau=500\ ¿Quizas en otra ocasion? $noVaila=1

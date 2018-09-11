@@ -1,0 +1,40 @@
+topic: ~conFoto()
+language: spe
+
+# Defining extra concepts out of words or group of words
+#concept:(hello) [hello hi hey "good morning" greetings]
+
+# Catching inputs and triggering outputs
+
+concept: (yepSelfi)[
+Si
+vale
+ok
+]
+
+concept: (nopeSelfi)[
+No
+Non
+]
+
+concept: (dispara)[
+listo
+]
+
+concept: (hacerSelfie)[
+selfi
+foto
+]
+
+u:(e:onStart) Entonces, ¿ nos hacemos un selfi, me salen muy bien ? $nosSacamosUnSelfie=1
+    u1:([e:quieresUnSelfieSI "~yepSelfi"]) $finIdentificacion = 1 Super, \pau=300\ ponerme la cámara \pau=300\ y avisarme cuando esteis listos $ponerCamara=1
+        u2:([e:camaraEnPosicionFoto "~dispara"]) $finIdentificacion = 1 $queremosFoto=1
+    u1:([e:quieresUnSelfieNO "~nopeSelfi"]) $finIdentificacion = 1 Vale, \pau=300\ en otra ocasion entonces $onStopped=1
+
+    
+u:(e:verSelfie) ¿ Quieres imprimirla ? $resetPostura=1
+    u1:([e:quieresImprimirSI "~yepSelfi"]) $imprimeElSelfie=1 Ya me parecía, es que soy un crack, menuda fotaka me ha salido \pau=500\ dile a mi compi que te de la copia $finFoto=1
+    u1:([e:quieresImprimirNO "~nopeSelfi"]) ^startTag(embarrassed) Bueno, en otra ocasión entonces $finIdentificacion = 1 $onStopped=1
+    
+# Replying to speech
+#u:(~hello) ~hello
